@@ -1,60 +1,61 @@
-import { position } from "../App";
-import {ETileTypes, idToTile, map, entrance} from '../data/maps/map';
+import {IPosition} from "../App";
+import {ETileTypes, idToTile, IMap} from '../data/maps/IMap';
 
-export const isValidMove = (map: map, currentPos: position, move: string) => {
-  switch (move) {
-    case 'w':
-      return !(isOutsideMap(map, currentPos, 'w') || isInvalidTile(map, currentPos, move));
+export const isValidMove = (map: IMap, currentPos: IPosition, move: string) => {
+    switch (move) {
+        case 'w':
+            return (isInsideMap(map, currentPos, 'w') && isValidTile(map, currentPos, move));
 
-    case 's':
-      return !(isOutsideMap(map, currentPos, 's') || isInvalidTile(map, currentPos, move))
+        case 's':
+            return (isInsideMap(map, currentPos, 's') && isValidTile(map, currentPos, move))
 
-    case 'a':
-      return !(isOutsideMap(map, currentPos, 'a') || isInvalidTile(map, currentPos, move));
+        case 'a':
+            return (isInsideMap(map, currentPos, 'a') && isValidTile(map, currentPos, move));
 
-    case 'd':
-      return !(isOutsideMap(map, currentPos, 'd') || isInvalidTile(map, currentPos, move));
+        case 'd':
+            return (isInsideMap(map, currentPos, 'd') && isValidTile(map, currentPos, move));
 
-    default: return false;
-  }
+        default:
+            return false;
+    }
 }
 
-const isOutsideMap = (map: map, currentPos: position, move: string) => {
-  const coord = destinedCoord(currentPos, move);
-  if (isValidCoord(coord, map)) return false;
+export const isInsideMap = (map: IMap, currentPos: IPosition, move: string) => {
+    const nextPoint = getNextPoint(currentPos, move);
+    return isValidPoint(map, nextPoint );
 }
 
-const isValidCoord = (destinedCoord: position, map: map) => {
-  if (destinedCoord.x > map.length || destinedCoord.y > map?.[destinedCoord.y]?.length) return false;
+export const isValidPoint = (map: IMap, nextPoint: IPosition) => {
+    if (nextPoint.x < 0 || nextPoint.y < 0) return false;
+    return nextPoint.x < map.length && nextPoint.y < map?.[nextPoint.x]?.length;
 }
 
-const destinedCoord = (currentPos: position, move: string) => {
-  let destinedCoord: position;
+export const getNextPoint = (currentPos: IPosition, move: string) => {
+    let nextPoint: IPosition;
 
-  switch (move) {
-    case 'w':
-      return destinedCoord = { x: currentPos.x, y: currentPos.y - 1 };
+    switch (move) {
+        case 'w':
+            return nextPoint = {x: currentPos.x, y: currentPos.y - 1};
 
-    case 's':
-      return destinedCoord = { x: currentPos.x, y: currentPos.y + 1 };
+        case 's':
+            return nextPoint = {x: currentPos.x, y: currentPos.y + 1};
 
-    case 'a':
-      return destinedCoord = { x: currentPos.x - 1 , y: currentPos.y };
+        case 'a':
+            return nextPoint = {x: currentPos.x - 1, y: currentPos.y};
 
-    case 'd':
-      return destinedCoord = { x: currentPos.x + 1, y: currentPos.y };
+        case 'd':
+            return nextPoint = {x: currentPos.x + 1, y: currentPos.y};
 
-    default:
-      return destinedCoord = { x: 0, y: 0 };
-  }
+        default:
+            return nextPoint = {x: 0, y: 0};
+    }
 }
 
-const isInvalidTile = (map: map, currentPos: position, move: string) => {
-  const coord = destinedCoord(currentPos, move);
-  const isValid = isValidCoord(coord, map);
-  if (!isValid) return true;
-  const tileTypeId =  map[coord.x][coord.y];
-  const tileType = idToTile.get(tileTypeId);
-
-  return (tileType === ETileTypes.box || tileType === ETileTypes.door);
+export const isValidTile = (map: IMap, currentPos: IPosition, move: string) => {
+    const nextPoint = getNextPoint(currentPos, move);
+    const isValid = isValidPoint(map, nextPoint);
+    if (!isValid) return false;
+    const tileTypeId = map[nextPoint.y][nextPoint.x];
+    const tileType = idToTile.get(tileTypeId);
+    return tileType === ETileTypes.standard;
 }

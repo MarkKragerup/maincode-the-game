@@ -1,4 +1,4 @@
-export type map = number[][];
+export type IMap = number[][];
 
 export enum ETileTypes {
   standard = 'STANDARD',
@@ -12,8 +12,8 @@ export const idToTile = new Map<number, ETileTypes>([
   [2, ETileTypes.door],
 ]);
 
-export const entrance: map = [
-  [1, 1, 3],
-  [2, 1, 1],
-  [1, 1, 1]
+export const entrance: IMap = [
+  [0, 0, 2],
+  [1, 0, 0],
+  [0, 0, 0]
 ];

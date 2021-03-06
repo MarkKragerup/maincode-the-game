@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { useKeyboardPress } from './utils/useKeyboardPress';
-import { entrance } from './data/maps/map';
+import { entrance } from './data/maps/IMap';
 import { isValidMove } from './utils/movement';
 
-export type position = {
+export type IPosition = {
   x: number;
   y: number;
 }
 
 const App = () => {
-  const [currentPos, setCurrentPos] = useState<position>({ x: 1, y: 1 });
+  const [currentPos, setCurrentPos] = useState<IPosition>({ x: 1, y: 1 });
 
   const forwardPress = useKeyboardPress('w');
   const backwardPress = useKeyboardPress('s');
