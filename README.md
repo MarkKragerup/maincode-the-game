@@ -5,7 +5,7 @@ The project follows the rules that;
 - The game in its entirety must be coded by hand. No dependencies for game-engines, UI-libraries and such are allowed.
 - The graphics must be hand crafted, entirely drawn or styled by the teammembers.
 
-Try the game now, at [play.maincode.dk]!
+Try the game now, at [play.maincode.dk]()!
 
 ## Want to run this locally?
 In the project directory, you can run:
@@ -22,4 +22,4 @@ Launches the test runner in the interactive watch mode.\
 All feedback and contributions are extremely welcome. We would love to share this experience with you in the community.
 Raise an issue, provide a pull request or simply tune in to chat with us at Maincode any time you wish!
 
-~ Markido, Farquaad and TheLue ¯\_(ツ)_/¯
+~ Markido, Farquaad and TheLue ¯\\_(ツ)_/¯
