@@ -57,5 +57,5 @@ export const isValidTile = (map: IMap, currentPos: IPosition, move: string) => {
     if (!isValid) return false;
     const tileTypeId = map[nextPoint.y][nextPoint.x];
     const tileType = idToTile.get(tileTypeId);
-    return tileType === ETileTypes.standard;
+    return tileType === ETileTypes.standard || tileType === ETileTypes.door;
 }
