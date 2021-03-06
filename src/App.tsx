@@ -69,7 +69,22 @@ const App = () => {
                             <img src={closebutton} className='cross' height={12} width={12}/>
                         </div>
                     </div>
-                    <p className='terminal-text'><span className='green-text'>loui@louis-macbook-pro</span>:<span className='green-blue'>~</span>%</p>
+
+                    { /* <p className='terminal-text'><span className='green-text'>loui@louis-macbook-pro</span>:<span className='green-blue'>~</span>%</p> */ }
+
+                    <div className='terminal-text-layout'>
+                        <p className='terminal-heading white-text'>MAINCODE</p>
+                        <p className='white-text thick-text'><b>COMMANDS</b></p>
+                        <ul className='command-list white-text'>
+                            <li className='li-item'>Valid command 1</li>
+                            <li className='li-item'>Valid command 2</li>
+                            <li className='li-item'>Valid command 3</li>
+                            <li className='li-item'>Valid command 4</li>
+                        </ul>
+                        <br/>
+                        <span className="">{'>'}</span>
+                        <input autoFocus className='input'/>
+                    </div>
                 </div>
             }
         </div>
