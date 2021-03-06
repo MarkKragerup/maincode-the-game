@@ -108,3 +108,4 @@ dist
 *.xml
 .DS_Store
 
+package-lock.json
