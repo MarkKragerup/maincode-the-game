@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import closebutton from './assets/CustomX.svg'
 import {useKeyboardPress} from './utils/useKeyboardPress';
-import {entrance} from './data/maps/IMap';
+import {entrance, lab} from './data/maps/IMap';
 import {isValidMove} from './utils/movement';
 import {RenderTile} from "./components/RenderTile";
 
@@ -22,7 +22,7 @@ const App = () => {
     const labDoorPosition: IPosition = {x: 2, y: 0};
 
     const [currentPos, setCurrentPos] = useState<IPosition>({x: 5, y: 5});
-    const [currentMap, setCurrentMap] = useState<EMap>(EMap.terminal);
+    const [currentMap, setCurrentMap] = useState<EMap>(EMap.entrance);
 
     const forwardPress = useKeyboardPress('w');
     const backwardPress = useKeyboardPress('s');
@@ -48,8 +48,10 @@ const App = () => {
     }, [currentPos])
 
     const changeMap = (position: IPosition) => {
-        if (position.x === terminalDoorPosition.x && position.y === terminalDoorPosition.y) setCurrentMap(EMap.terminal);
-        if (position.x === labDoorPosition.x && position.y === labDoorPosition.y) setCurrentMap(EMap.lab);
+        if (currentMap === EMap.entrance) {
+            if (position.x === terminalDoorPosition.x && position.y === terminalDoorPosition.y) setCurrentMap(EMap.terminal);
+            if (position.x === labDoorPosition.x && position.y === labDoorPosition.y) setCurrentMap(EMap.lab);
+        }
     }
 
     return (
@@ -58,6 +60,13 @@ const App = () => {
                 currentMap === EMap.entrance &&
                 <div className='map'>
                     {entrance.map((e, i) => <div className='row'>{e.map((tile, j) => RenderTile(tile, i, j))}</div>)}
+                    <div className='avatar' style={{left: `${currentPos.x * 10}%`, top: `${currentPos.y * 10}%`}}/>
+                </div>
+            }
+            {
+                currentMap === EMap.lab &&
+                <div className='map'>
+                    {lab.map((e, i) => <div className='row'>{e.map((tile, j) => RenderTile(tile, i, j))}</div>)}
                     <div className='avatar' style={{left: `${currentPos.x * 10}%`, top: `${currentPos.y * 10}%`}}/>
                 </div>
             }
