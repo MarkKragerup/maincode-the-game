@@ -1,12 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import { useKeyboardPress } from './utils/useKeyboardPress';
+import { entrance } from './data/maps/map';
+import { isValidMove } from './utils/movement';
 
-function App() {
+export type position = {
+  x: number;
+  y: number;
+}
+
+const App = () => {
+  const [currentPos, setCurrentPos] = useState<position>({ x: 1, y: 1 });
+
+  const forwardPress = useKeyboardPress('w');
+  const backwardPress = useKeyboardPress('s');
+  const leftPress = useKeyboardPress('a');
+  const rightPress = useKeyboardPress('d');
+
+  useEffect(() => {
+    if (forwardPress && isValidMove(entrance, currentPos, 'w')) setCurrentPos({ x: currentPos.x, y: currentPos.y - 1 });
+    if (backwardPress && isValidMove(entrance, currentPos, 's')) setCurrentPos({ x: currentPos.x, y: currentPos.y + 1 });
+    if (leftPress && isValidMove(entrance, currentPos, 'a')) setCurrentPos({ x: currentPos.x - 1, y: currentPos.y });
+    if (rightPress && isValidMove(entrance, currentPos, 'd')) setCurrentPos({ x: currentPos.x + 1, y: currentPos.y });
+    // eslint-disable-next-line
+  }, [forwardPress, backwardPress, leftPress, rightPress, setCurrentPos]);
+
+  console.log(currentPos);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -22,5 +45,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
