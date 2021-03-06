@@ -22,4 +22,4 @@ Launches the test runner in the interactive watch mode.\
 All feedback and contributions are extremely welcome. We would love to share this experience with you in the community.
 Raise an issue, provide a pull request or simply tune in to chat with us at Maincode any time you wish!
 
-~ Markido, Farquaad and TheLue ¯\_(ツ)_/¯
+~ Markido, Farquaad and TheLue ¯\\_(ツ)_/¯
