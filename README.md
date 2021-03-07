@@ -1,5 +1,5 @@
 # Maincode - the game!
-Welcome to our gamified Club House.
+Welcome to our **gamified Club House**.
 The goal of this project is to make a classic style RPG game using the Create-React-App with Typescript and minimal other dependencies.
 The incentive is team-building, practise within the framework and proof of concept as well as inspiration for other React.js fans.
 
