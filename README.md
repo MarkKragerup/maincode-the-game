@@ -1,9 +1,11 @@
 # Maincode - the game!
-Welcome to our gamified Club House. The goal of this project is to make a classic style RPG game using the Create-React-App with Typescript and minimal other dependencies. The insentive is teambuilding, practise within the framework and proof of concept as well as inspiration for other React.js fans.
+Welcome to our gamified Club House.
+The goal of this project is to make a classic style RPG game using the Create-React-App with Typescript and minimal other dependencies.
+The incentive is team-building, practise within the framework and proof of concept as well as inspiration for other React.js fans.
 
 The project follows the rules that;
 - The game in its entirety must be coded by hand. No dependencies for game-engines, UI-libraries and such are allowed.
-- The graphics must be hand crafted, entirely drawn or styled by the teammembers.
+- The graphics must be hand crafted, entirely drawn or styled by the team-members.
 
 Try the game now, at [play.maincode.dk]()!
 
@@ -15,10 +17,10 @@ You can also tune in at our discord ....>>, where we discuss life, react and som
 
 ~ Markido, Farquaad and TheLue ¯\\_(ツ)_/¯
 
-## Roadmap
+## Where are we taking the project?
 ... plans for the future! Looks here for our roadmap:
 
-## Current Feature-list
+## What features does the project include today?
 The project currently includes..
 - base 2d camera game work
 - sound player
@@ -41,12 +43,11 @@ Launches the test runner in the interactive watch mode.\
 We have created a minimal template for getting started with developing your very own game!
 ... instructions..
 
-## Under the hood
+## Wondering how this was made? Let's look under the hood
 Wondering how we made the game? in this section we will describe our process and give you the brief overview of how to make your own game engine in pure React.js.
 
 ### Dependencies
 - xxx for yyy
 
-
-## Donating some much needed coffee
+## Want to support us? Donate some much-needed coffee
 Phew! drawing and placing game-tiles is hard work. If you like our effort and want to put a smile on our collective faces, feel free to donate a coffee - cheers! ..link..
