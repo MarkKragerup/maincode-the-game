@@ -22,4 +22,31 @@ Launches the test runner in the interactive watch mode.\
 All feedback and contributions are extremely welcome. We would love to share this experience with you in the community.
 Raise an issue, provide a pull request or simply tune in to chat with us at Maincode any time you wish!
 
+You can also tune in at our discord ....>>, where we discuss life, react and sometimes this project.
+
 ~ Markido, Farquaad and TheLue ¯\\_(ツ)_/¯
+
+## Roadmap
+... plans for the future! 
+
+## Current Feature-list
+The project currently includes..
+- base 2d camera game work
+- sound player
+- interactive terminal
+- character movement animations
+...
+
+## Want to make your own game? use our template!
+We have created a minimal template for getting started with developing your very own game!
+... instructions..
+
+## Under the hood
+Wondering how we made the game? in this section we will describe our process and give you the brief overview of how to make your own game engine in pure React.js.
+
+### Dependencies
+- xxx for yyy
+
+
+## Donating some much needed coffee
+Phew! drawing and placing game-tiles is hard work. If you like our effort and want to put a smile on our collective faces, feel free to donate a coffee - cheers! ..link..
