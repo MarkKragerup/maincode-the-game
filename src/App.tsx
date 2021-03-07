@@ -6,6 +6,12 @@ import {isValidMove} from './utils/movement';
 import {RenderTile} from "./components/RenderTile";
 import Modal from './components/Modal';
 
+/**
+ * ES6 import cant import sound files.
+ * I cannot get this to work...
+ * const soundtrack = require('./assets/soundtrack.mp3');
+ */
+
 export type IPosition = {
     x: number;
     y: number;
@@ -138,7 +144,16 @@ const App = () => {
                     </div>
                 }
                 <Modal isOpen={shouldOpenTerminal}
-                       onCloseCallback={() => setShouldOpenTerminal(false)}>{terminal}</Modal>
+                       onCloseCallback={() => setShouldOpenTerminal(false)}>{terminal}
+                </Modal>
+            </div>
+
+            { /* Chrome does not support autoplay */ }
+            <div className='audio-container'>
+                <audio controls>
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"/>
+                    Your browser does not support audio
+                </audio>
             </div>
         </div>
     );

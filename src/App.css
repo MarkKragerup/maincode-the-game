@@ -5,6 +5,16 @@
     --grid-cell: calc(var(--pixel-size) * 16);
 }
 
+audio {
+    border: none;
+    outline: none;
+}
+.audio-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
 .character {
     width: calc(32px * var(--pixel-size));
     height: calc(32px * var(--pixel-size));
