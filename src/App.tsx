@@ -101,10 +101,6 @@ const App = () => {
                     <span className="">{'>'}</span>
                     <input autoFocus type='text' className='input' onChange={onTerminalInputChange}
                            onKeyUp={() => console.log()}/>
-
-                    {
-
-                    }
                 </div>
             </div>
         </div>
@@ -116,11 +112,13 @@ const App = () => {
                 {
                     currentMap === EMap.entrance &&
                     <div className='map'
-                         style={{transform: `translate3d(${-currentPos.x * 50}px , ${-currentPos.y * 50}px , 0)`}}>
+                         style={{transform: `translate3d(${-currentPos.x * 50 + 250}px , ${-currentPos.y * 50 + 250}px , 0)`}}>
                         {entrance.map((e, i) => <div
                             className='row'>{e.map((tile, j) => RenderTile(tile, j, i))}</div>)}
                         <div
-                            className={`character ${walking ? 'walking' : ''} translate3d(${currentPos.x * -10}%, ${currentPos.y * -10}% , 0`}>
+                            className={`character ${walking ? 'walking' : ''}`}
+                            style={{transform: `translate3d(${currentPos.x * 50}px, ${currentPos.y * 50}px , 0`}}
+                        >
                             <img className={`character-spritesheet ${faceDirection}`}
                                  src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
                                  alt="Character"/>
