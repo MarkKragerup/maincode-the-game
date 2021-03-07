@@ -7,6 +7,25 @@ The project follows the rules that;
 
 Try the game now, at [play.maincode.dk]()!
 
+## Want to contribute or chat?
+All feedback and contributions are extremely welcome. We would love to share this experience with you in the community.
+Raise an issue, provide a pull request or simply tune in to chat with us at Maincode any time you wish!
+
+You can also tune in at our discord ....>>, where we discuss life, react and sometimes this project.
+
+~ Markido, Farquaad and TheLue ¯\\_(ツ)_/¯
+
+## Roadmap
+... plans for the future! Looks here for our roadmap:
+
+## Current Feature-list
+The project currently includes..
+- base 2d camera game work
+- sound player
+- interactive terminal
+- character movement animations
+...
+
 ## Want to run this locally?
 In the project directory, you can run:
 
@@ -17,25 +36,6 @@ The page will reload if you make edits.\
 
 ### `npm test`
 Launches the test runner in the interactive watch mode.\
-
-## Want to contribute or chat?
-All feedback and contributions are extremely welcome. We would love to share this experience with you in the community.
-Raise an issue, provide a pull request or simply tune in to chat with us at Maincode any time you wish!
-
-You can also tune in at our discord ....>>, where we discuss life, react and sometimes this project.
-
-~ Markido, Farquaad and TheLue ¯\\_(ツ)_/¯
-
-## Roadmap
-... plans for the future! 
-
-## Current Feature-list
-The project currently includes..
-- base 2d camera game work
-- sound player
-- interactive terminal
-- character movement animations
-...
 
 ## Want to make your own game? use our template!
 We have created a minimal template for getting started with developing your very own game!
