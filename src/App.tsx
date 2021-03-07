@@ -30,7 +30,9 @@ const App = () => {
 
     const [currentPos, setCurrentPos] = useState<IPosition>({x: 5, y: 5});
     const [currentMap, setCurrentMap] = useState<EMap>(EMap.entrance);
-    const [faceDirection, setFaceDirection] = useState<EFaceDirection>(EFaceDirection.up)
+    const [faceDirection, setFaceDirection] = useState<EFaceDirection>(EFaceDirection.up);
+    const [terminalInput, setTerminalInput] = useState("");
+    const [walking, setWalking] = useState(false);
 
     const [shouldOpenTerminal, setShouldOpenTerminal] = useState(false);
 
@@ -38,25 +40,32 @@ const App = () => {
     const backwardPress = useKeyboardPress('s');
     const leftPress = useKeyboardPress('a');
     const rightPress = useKeyboardPress('d');
+    const enterPress = useKeyboardPress('Enter');
 
     useEffect(() => {
         // If terminal is open do not listen for key press
         if (!shouldOpenTerminal) {
             if (forwardPress && isValidMove(entrance, currentPos, 'w')) {
                 setCurrentPos({x: currentPos.x, y: currentPos.y - 1})
-                setFaceDirection(EFaceDirection.up)
+                setFaceDirection(EFaceDirection.up);
+                setWalking(true);
             }
             if (backwardPress && isValidMove(entrance, currentPos, 's')) {
                 setCurrentPos({x: currentPos.x, y: currentPos.y + 1})
-                setFaceDirection(EFaceDirection.down)
+                setFaceDirection(EFaceDirection.down);
+                setWalking(true);
             }
             if (leftPress && isValidMove(entrance, currentPos, 'a')) {
                 setCurrentPos({x: currentPos.x - 1, y: currentPos.y})
-                setFaceDirection(EFaceDirection.left)
+                setFaceDirection(EFaceDirection.left);
+                setWalking(true);
+
             }
             if (rightPress && isValidMove(entrance, currentPos, 'd')) {
                 setCurrentPos({x: currentPos.x + 1, y: currentPos.y})
-                setFaceDirection(EFaceDirection.right)
+                setFaceDirection(EFaceDirection.right);
+                setWalking(true);
+
             }
         }
 
@@ -74,6 +83,8 @@ const App = () => {
         }
     }
 
+    const onTerminalInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => setTerminalInput(ev.target.value);
+
     const terminal = (
         <div className='terminal'>
             <div className='title-bar'>
@@ -88,37 +99,49 @@ const App = () => {
                     </ul>
                     <br/>
                     <span className="">{'>'}</span>
-                    <input autoFocus className='input'/>
+                    <input autoFocus type='text' className='input' onChange={onTerminalInputChange}
+                           onKeyUp={() => console.log()}/>
+
+                    {
+
+                    }
                 </div>
             </div>
         </div>
     );
 
     return (
-        <div>
-            {
-                currentMap === EMap.entrance &&
-                <div className='map'>
-                    {entrance.map((e, i) => <div className='row'>{e.map((tile, j) => RenderTile(tile, j, i))}</div>)}
-                    <div className='character' style={{left: `${currentPos.x * 10}%`, top: `${currentPos.y * 10}%`}}>
-                        <img className={`character-spritesheet ${faceDirection}`}
-                             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
-                             alt="Character"/>
+        <div className='frame'>
+            <div className='camera'>
+                {
+                    currentMap === EMap.entrance &&
+                    <div className='map'
+                         style={{transform: `translate3d(${-currentPos.x * 50}px , ${-currentPos.y * 50}px , 0)`}}>
+                        {entrance.map((e, i) => <div
+                            className='row'>{e.map((tile, j) => RenderTile(tile, j, i))}</div>)}
+                        <div
+                            className={`character ${walking ? 'walking' : ''} translate3d(${currentPos.x * -10}%, ${currentPos.y * -10}% , 0`}>
+                            <img className={`character-spritesheet ${faceDirection}`}
+                                 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
+                                 alt="Character"/>
+                        </div>
                     </div>
-                </div>
-            }
-            {
-                currentMap === EMap.lab &&
-                <div className='map'>
-                    {lab.map((e, i) => <div className='row'>{e.map((tile, j) => RenderTile(tile, i, j))}</div>)}
-                    <div className='character' style={{left: `${currentPos.x * 10}%`, top: `${currentPos.y * 10}%`}}>
-                        <img className={`character-spritesheet ${faceDirection}`}
-                             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
-                             alt="Character"/>
+                }
+                {
+                    currentMap === EMap.lab &&
+                    <div className='map'>
+                        {lab.map((e, i) => <div className='row'>{e.map((tile, j) => RenderTile(tile, i, j))}</div>)}
+                        <div className='character'
+                             style={{left: `${currentPos.x * 10}%`, top: `${currentPos.y * 10}%`}}>
+                            <img className={`character-spritesheet ${faceDirection}`}
+                                 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
+                                 alt="Character"/>
+                        </div>
                     </div>
-                </div>
-            }
-            <Modal isOpen={shouldOpenTerminal} onCloseCallback={() => setShouldOpenTerminal(false)}>{terminal}</Modal>
+                }
+                <Modal isOpen={shouldOpenTerminal}
+                       onCloseCallback={() => setShouldOpenTerminal(false)}>{terminal}</Modal>
+            </div>
         </div>
     );
 }

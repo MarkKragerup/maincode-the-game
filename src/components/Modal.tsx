@@ -9,8 +9,8 @@ type IProps = {
 
 const Modal: React.FC<IProps> = ({children, isOpen = false, onCloseCallback}): JSX.Element => {
     return (
-        <div className={`modal-background ${isOpen ? 'block' : 'none'}`}>
-            <div className='modal-container'>
+        <div className={`modal-container ${isOpen ? 'block' : 'none'}`}>
+            <div className='modal-background'>
                 <div className='close-button' onClick={onCloseCallback}>
                     <img src={closebutton} alt='close' className='cross' height={12} width={12}/>
                 </div>

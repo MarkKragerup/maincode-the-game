@@ -2,60 +2,77 @@
 
 :root {
     --pixel-size: 2;
+    --grid-cell: calc(var(--pixel-size) * 16);
 }
 
 .character {
     width: calc(32px * var(--pixel-size));
     height: calc(32px * var(--pixel-size));
-    overflow: hidden;
     position: absolute;
+    overflow: hidden;
 }
 
 .character-spritesheet {
-    animation: move-spritesheet 1s steps(4) infinite;
     width: calc(128px * var(--pixel-size));
     position: absolute;
 }
 
+.character-spritesheet .walking {
+    animation: move-spritesheet 0.6s steps(4) infinite;
+}
+
 @keyframes move-spritesheet {
     from {
-        transform: translate3d(0px,0,0)
+        transform: translate3d(0px, 0, 0)
     }
     to {
-        transform: translate3d(-100%,0,0)
+        transform: translate3d(-100%, 0, 0)
     }
 }
 
 .face-right {
     top: calc(-32px * var(--pixel-size));
 }
+
 .face-up {
     top: calc(-64px * var(--pixel-size));
 }
+
 .face-left {
     top: calc(-96px * var(--pixel-size));
 }
 
 body {
     font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    width: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: lightblue;
 }
 
 ul {
     list-style-type: none;
 }
 
+.camera {
+    overflow: hidden;
+    position: relative;
+}
+
+.frame {
+    border: 1px solid red;
+}
 .map {
-    height: 100vh;
-    width: 100vh;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: calc(10 * 50px);
+    height: calc(10 * 50px);
+    position: relative;
 }
 
 .row {
     display: flex;
-    height: 10%;
+    height: 50px;
 }
 
 .avatar {
