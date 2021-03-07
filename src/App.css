@@ -1,5 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+:root {
+    --pixel-size: 2;
+}
+
+.character {
+    width: calc(32px * var(--pixel-size));
+    height: calc(32px * var(--pixel-size));
+    overflow: hidden;
+    position: absolute;
+}
+
+.character-spritesheet {
+    animation: move-spritesheet 1s steps(4) infinite;
+    width: calc(128px * var(--pixel-size));
+    position: absolute;
+}
+
+@keyframes move-spritesheet {
+    from {
+        transform: translate3d(0px,0,0)
+    }
+    to {
+        transform: translate3d(-100%,0,0)
+    }
+}
+
+.face-right {
+    top: calc(-32px * var(--pixel-size));
+}
+.face-up {
+    top: calc(-64px * var(--pixel-size));
+}
+.face-left {
+    top: calc(-96px * var(--pixel-size));
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
 }
@@ -45,7 +81,7 @@ ul {
 }
 
 .cross {
-   margin-left: 3px;
+    margin-left: 3px;
 }
 
 .green-text {
