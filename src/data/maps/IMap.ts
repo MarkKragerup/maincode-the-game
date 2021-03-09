@@ -12,7 +12,7 @@ export const idToTile = new Map<number, ETileTypes>([
     [2, ETileTypes.door],
 ]);
 
-export const entrance: IMap = [
+const entrance: IMap = [
     [0, 0, 2, 0, 0, 0, 0, 2, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -25,7 +25,7 @@ export const entrance: IMap = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-export const lab: IMap = [
+const lab: IMap = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,3 +37,5 @@ export const lab: IMap = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
+
+export const levels: IMap[] = [entrance, lab];

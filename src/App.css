@@ -16,12 +16,16 @@ audio {
 }
 
 .character {
-    width: calc(32px * var(--pixel-size));
-    height: calc(32px * var(--pixel-size));
+    width: 50px;
+    height: 50px;
     position: absolute;
     overflow: hidden;
     top: 0;
     left: 0;
+}
+
+.map, .character {
+    transition: 0.2s transform linear;
 }
 
 .character-spritesheet {

@@ -1,17 +1,21 @@
 import {ETileTypes, idToTile} from "../data/maps/IMap";
 import './tiles.css';
 
-export const RenderTile = (tileTypeId: number, x:number, y: number) => {
+export const RenderTile = (tileTypeId: number, x:number, y: number, tileSize: number) => {
     const tileType = idToTile.get(tileTypeId);
+    const style = {
+        width: `${tileSize}px`,
+        height: `${tileSize}px`
+    }
 
     switch (tileType) {
         case ETileTypes.standard:
-            return <div className='standard tileSize'>{x} , {y}</div>
+            return <div style={style} className='standard'>{x} , {y}</div>
         case ETileTypes.box:
-            return <div className='box tileSize'>{x} , {y}</div>
+            return <div style={style} className='box'>{x} , {y}</div>
         case ETileTypes.door:
-            return <div className='door tileSize'>{x} , {y}</div>
+            return <div style={style} className='door'>{x} , {y}</div>
         default:
-            return <div className='standard tileSize'>{x} , {y}</div>
+            return <div style={style} className='standard'>{x} , {y}</div>
     }
 }

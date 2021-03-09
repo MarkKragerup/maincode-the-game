@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import {useKeyboardPress} from './utils/useKeyboardPress';
-import {entrance, lab} from './data/maps/IMap';
+import {levels} from './data/maps/IMap';
 import {isValidMove} from './utils/movement';
 import {RenderTile} from "./components/RenderTile";
 import Modal from './components/Modal';
@@ -31,15 +31,16 @@ enum EFaceDirection {
 }
 
 const App = () => {
-    const terminalDoorPosition: IPosition = {x: 7, y: 0};
-    const labDoorPosition: IPosition = {x: 2, y: 0};
+    const terminalDoorPosition: IPosition = { x: 7, y: 0 };
+    const labDoorPosition: IPosition = { x: 2, y: 0 };
 
     const [currentPos, setCurrentPos] = useState<IPosition>({x: 5, y: 5});
     const [currentMap, setCurrentMap] = useState<EMap>(EMap.entrance);
+    const [currentLevel, setCurrentLevel] = useState<number>(0);
+    const [currentTile, setCurrentTile] = useState<{column: number, row: number}>();
     const [faceDirection, setFaceDirection] = useState<EFaceDirection>(EFaceDirection.up);
     const [terminalInput, setTerminalInput] = useState("");
     const [walking, setWalking] = useState(false);
-
     const [shouldOpenTerminal, setShouldOpenTerminal] = useState(false);
 
     const forwardPress = useKeyboardPress('w');
@@ -48,39 +49,50 @@ const App = () => {
     const rightPress = useKeyboardPress('d');
     const enterPress = useKeyboardPress('Enter');
 
+    const tileSize = 50;
+    const stepsPerTile = 50;
+    const stepSize = tileSize/stepsPerTile;
+    const characterOffSetTiles = 5 * tileSize;
+
+    // In milliseconds.
+    const intervalStepDuration = 200;
+
+    type IMove = {
+        difX: number;
+        difY: number;
+        faceDirection: EFaceDirection;
+    }
+
+    /* Handle movement actions */
     useEffect(() => {
-        // If terminal is open do not listen for key press
-        if (!shouldOpenTerminal) {
-            if (forwardPress && isValidMove(entrance, currentPos, 'w')) {
-                setCurrentPos({x: currentPos.x, y: currentPos.y - 1})
-                setFaceDirection(EFaceDirection.up);
-                setWalking(true);
-            }
-            if (backwardPress && isValidMove(entrance, currentPos, 's')) {
-                setCurrentPos({x: currentPos.x, y: currentPos.y + 1})
-                setFaceDirection(EFaceDirection.down);
-                setWalking(true);
-            }
-            if (leftPress && isValidMove(entrance, currentPos, 'a')) {
-                setCurrentPos({x: currentPos.x - 1, y: currentPos.y})
-                setFaceDirection(EFaceDirection.left);
-                setWalking(true);
+        let nextMove: IMove = {difX: 0, difY: -stepSize, faceDirection: EFaceDirection.up}
+        if (backwardPress) nextMove = {difX: 0, difY: stepSize, faceDirection: EFaceDirection.down}
+        if (leftPress) nextMove = {difX: -stepSize, difY: 0, faceDirection: EFaceDirection.left}
+        if (rightPress) nextMove = {difX: stepSize, difY: 0, faceDirection: EFaceDirection.right}
 
-            }
-            if (rightPress && isValidMove(entrance, currentPos, 'd')) {
-                setCurrentPos({x: currentPos.x + 1, y: currentPos.y})
-                setFaceDirection(EFaceDirection.right);
-                setWalking(true);
+        if (forwardPress || backwardPress || leftPress || rightPress) {
+            setFaceDirection(nextMove.faceDirection);
+            setWalking(true);
 
+            const interval = setInterval(() => setCurrentPos((currentPos) => {
+                const nextPos = { x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY };
+                return isValidMove(levels[currentLevel], nextPos) ? { x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY } : currentPos;
+              }
+            ), intervalStepDuration);
+            return () => {
+                setWalking(false);
+                clearInterval(interval);
             }
         }
-
-        // eslint-disable-next-line
-    }, [forwardPress, backwardPress, leftPress, rightPress, setCurrentPos]);
+    }, [forwardPress, backwardPress, leftPress, rightPress]);
 
     useEffect(() => {
+        const currentTile = { column: currentPos.x, row: currentPos.y }
+        console.log('tile', currentTile);
+        console.log('currentPos', currentPos);
+        setCurrentTile(currentTile);
         changeMap(currentPos);
-    }, [currentPos])
+    }, [currentPos]);
 
     const changeMap = (position: IPosition) => {
         if (currentMap === EMap.entrance) {
@@ -115,34 +127,21 @@ const App = () => {
     return (
         <div className='frame'>
             <div className='camera'>
-                {
-                    currentMap === EMap.entrance &&
-                    <div className='map'
-                         style={{transform: `translate3d(${-currentPos.x * 50 + 250}px , ${-currentPos.y * 50 + 250}px , 0)`}}>
-                        {entrance.map((e, i) => <div
-                            className='row'>{e.map((tile, j) => RenderTile(tile, j, i))}</div>)}
-                        <div
-                            className={`character ${walking ? 'walking' : ''}`}
-                            style={{transform: `translate3d(${currentPos.x * 50}px, ${currentPos.y * 50}px , 0`}}
-                        >
-                            <img className={`character-spritesheet ${faceDirection}`}
-                                 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
-                                 alt="Character"/>
-                        </div>
+                <div className='map'
+                     style={{transform: `translate3d(${-currentPos.x * tileSize + characterOffSetTiles}px , ${-currentPos.y * tileSize + characterOffSetTiles}px , 0)`}}>
+                    {levels[currentLevel].map((row, i) =>
+                      <div
+                        key={i} className='row'>{row.map((tile, j) => RenderTile(tile, j, i, tileSize))}
+                      </div>)}
+                    <div
+                        className={`character ${walking ? 'walking' : ''}`}
+                        style={{transform: `translate3d(${currentPos.x * tileSize}px, ${currentPos.y * tileSize}px , 0`}}
+                    >
+                        <img className={`character-spritesheet ${faceDirection}`}
+                             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
+                             alt="Character"/>
                     </div>
-                }
-                {
-                    currentMap === EMap.lab &&
-                    <div className='map'>
-                        {lab.map((e, i) => <div className='row'>{e.map((tile, j) => RenderTile(tile, i, j))}</div>)}
-                        <div className='character'
-                             style={{left: `${currentPos.x * 10}%`, top: `${currentPos.y * 10}%`}}>
-                            <img className={`character-spritesheet ${faceDirection}`}
-                                 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
-                                 alt="Character"/>
-                        </div>
-                    </div>
-                }
+                </div>
                 <Modal isOpen={shouldOpenTerminal}
                        onCloseCallback={() => setShouldOpenTerminal(false)}>{terminal}
                 </Modal>
