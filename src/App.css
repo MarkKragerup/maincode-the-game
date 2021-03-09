@@ -24,10 +24,6 @@ audio {
     left: 0;
 }
 
-.map, .character {
-    transition: 0.2s transform linear;
-}
-
 .character-spritesheet {
     width: calc(128px * var(--pixel-size));
     position: absolute;

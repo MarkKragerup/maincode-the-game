@@ -40,7 +40,7 @@ const App = () => {
     const [currentTile, setCurrentTile] = useState<{column: number, row: number}>();
     const [faceDirection, setFaceDirection] = useState<EFaceDirection>(EFaceDirection.up);
     const [terminalInput, setTerminalInput] = useState("");
-    const [walking, setWalking] = useState(false);
+    const [isWalking, setIsWalking] = useState(false);
     const [shouldOpenTerminal, setShouldOpenTerminal] = useState(false);
 
     const forwardPress = useKeyboardPress('w');
@@ -49,13 +49,15 @@ const App = () => {
     const rightPress = useKeyboardPress('d');
     const enterPress = useKeyboardPress('Enter');
 
+    // Tile logic
     const tileSize = 50;
     const stepsPerTile = 50;
     const stepSize = tileSize/stepsPerTile;
     const characterOffSetTiles = 5 * tileSize;
 
     // In milliseconds.
-    const intervalStepDuration = 200;
+    const moveSpeed = 200;
+    const moveTransitionStyle = `${moveSpeed}ms transform linear`;
 
     type IMove = {
         difX: number;
@@ -72,25 +74,22 @@ const App = () => {
 
         if (forwardPress || backwardPress || leftPress || rightPress) {
             setFaceDirection(nextMove.faceDirection);
-            setWalking(true);
+            setIsWalking(true);
 
             const interval = setInterval(() => setCurrentPos((currentPos) => {
                 const nextPos = { x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY };
                 return isValidMove(levels[currentLevel], nextPos) ? { x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY } : currentPos;
               }
-            ), intervalStepDuration);
+            ), moveSpeed);
             return () => {
-                setWalking(false);
                 clearInterval(interval);
+                setIsWalking(false);
             }
         }
     }, [forwardPress, backwardPress, leftPress, rightPress]);
 
     useEffect(() => {
-        const currentTile = { column: currentPos.x, row: currentPos.y }
-        console.log('tile', currentTile);
-        console.log('currentPos', currentPos);
-        setCurrentTile(currentTile);
+        setCurrentTile({ column: currentPos.x, row: currentPos.y });
         changeMap(currentPos);
     }, [currentPos]);
 
@@ -118,7 +117,7 @@ const App = () => {
                     <br/>
                     <span className="">{'>'}</span>
                     <input autoFocus type='text' className='input' onChange={onTerminalInputChange}
-                           onKeyUp={() => console.log()}/>
+                           onKeyUp={() => console.log('Mark er til mænd - eller mus?')}/>
                 </div>
             </div>
         </div>
@@ -127,15 +126,15 @@ const App = () => {
     return (
         <div className='frame'>
             <div className='camera'>
-                <div className='map'
-                     style={{transform: `translate3d(${-currentPos.x * tileSize + characterOffSetTiles}px , ${-currentPos.y * tileSize + characterOffSetTiles}px , 0)`}}>
+                <div className='map '
+                     style={{transform: `translate3d(${-currentPos.x * tileSize + characterOffSetTiles}px , ${-currentPos.y * tileSize + characterOffSetTiles}px, 0)`, transition: moveTransitionStyle}}>
                     {levels[currentLevel].map((row, i) =>
                       <div
                         key={i} className='row'>{row.map((tile, j) => RenderTile(tile, j, i, tileSize))}
                       </div>)}
                     <div
-                        className={`character ${walking ? 'walking' : ''}`}
-                        style={{transform: `translate3d(${currentPos.x * tileSize}px, ${currentPos.y * tileSize}px , 0`}}
+                        className={`character ${isWalking ? 'walking' : ''}`}
+                        style={{transform: `translate3d(${currentPos.x * tileSize}px, ${currentPos.y * tileSize}px, 0`, transition: moveTransitionStyle}}
                     >
                         <img className={`character-spritesheet ${faceDirection}`}
                              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
