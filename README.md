@@ -6,6 +6,7 @@ The incentive is team-building, practise within the framework and proof of conce
 The project follows the rules that;
 - The game in its entirety must be coded by hand. No dependencies for game-engines, UI-libraries and such are allowed.
 - The graphics must be hand crafted, entirely drawn or styled by the team-members.
+- The soundwork and music must be home-made as well.. need a slapping sound? find a microphone, a buddy and a piece of ham.
 
 Try the game now, at [play.maincode.dk]()!
 
