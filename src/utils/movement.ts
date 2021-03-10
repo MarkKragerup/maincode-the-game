@@ -1,52 +1,43 @@
-import { ETileTypes, idToTile, IMap } from '../data/maps/IMap';
+import { ETileTypes, idToTile, IMap, levels } from '../data/maps/IMap';
 
 export type IPosition = { x: number; y: number };
 
-export type ITransformCB = (translate: string) => void;
+// Tile logic
+export const tileSize = 50;
+export const stepsPerTile = 1;
+export const stepSize = 1 / stepsPerTile;
+
+export const charTileSizeRatio = 2;
+export const charOffSetTiles = 5 * tileSize;
 
 //start in the middle of the map
-let x = 250;
-let y = 250;
-const held_directions: any[] = []; //State of which arrow keys we are holding down
-const speed = 5; //How fast the character moves in pixels per frame
+const camera_offset = 250;
+
+let x = camera_offset;
+let y = camera_offset;
+
+const held_directions: any[] = []; // State of which arrow keys we are holding down
+const speed = 5; // How fast the character moves in pixels per frame
 
 // @Returns new translates for moving the character and the map.
-export const moveCharacter = (char?: HTMLElement, map?: HTMLElement) => {
+export const moveCharacter = (currentLevel: number, char?: HTMLElement, map?: HTMLElement) => {
 	const held_direction = held_directions[0];
+
+	const nextMove = { x: x, y: y };
+
 	if (held_direction) {
-		if (held_direction === directions.right) {
-			x += speed;
-		}
-		if (held_direction === directions.left) {
-			x -= speed;
-		}
-		if (held_direction === directions.down) {
-			y += speed;
-		}
-		if (held_direction === directions.up) {
-			y -= speed;
-		}
-	}
+		if (held_direction === directions.right) nextMove.x += speed;
+		if (held_direction === directions.left) nextMove.x -= speed;
+		if (held_direction === directions.down) nextMove.y += speed;
+		if (held_direction === directions.up) nextMove.y -= speed;
 
-	//Limits (gives the illusion of walls)
-	const leftLimit = -8;
-	const rightLimit = 16 * 11 + 8;
-	const topLimit = -8 + 32;
-	const bottomLimit = 16 * 7;
-	if (x < leftLimit) {
-		x = leftLimit;
-	}
-	if (x > rightLimit) {
-		x = rightLimit;
-	}
-	if (y < topLimit) {
-		y = topLimit;
-	}
-	if (y > bottomLimit) {
-		y = bottomLimit;
-	}
+		console.log(isValidMove(levels[currentLevel], nextMove));
 
-	const camera_offset = 250;
+		if (true) {
+			x = nextMove.x;
+			y = nextMove.y;
+		} else return;
+	}
 
 	if (!!char && !!map) {
 		map.style.transform = `translate3d( ${-x + camera_offset}px, ${-y + camera_offset}px, 0 )`;
@@ -85,19 +76,17 @@ document.addEventListener('keyup', (e) => {
 });
 
 /** Sets up a persistent loop for the character movement animations. */
-export const movementLoop = (char?: HTMLElement, map?: HTMLElement) => {
-	moveCharacter(char, map);
+export const movementLoop = (currentLevel: number, char?: HTMLElement, map?: HTMLElement) => {
+	moveCharacter(currentLevel, char, map);
 	window.requestAnimationFrame(() => {
-		movementLoop(char, map);
+		movementLoop(currentLevel, char, map);
 	});
 };
 
-export const isValidMove = (map: IMap, nextMove: IPosition, charTileSizeRatio: number): boolean => {
+export const isValidMove = (map: IMap, nextMove: IPosition): boolean => {
 	// There is a boundary for both next left and right tile, since the char can be bigger than 1 tile.
 	const nextRightTile = map?.[Math.ceil(nextMove.y + charTileSizeRatio / 2)]?.[Math.floor(nextMove.x + charTileSizeRatio / 2)];
 	const nextLeftTile = map?.[Math.floor(nextMove.y + charTileSizeRatio / 2)]?.[Math.floor(nextMove.x)];
-
-	console.log({ nextM: nextMove, charTileRat: charTileSizeRatio, nleft: nextLeftTile, nright: nextRightTile });
 
 	let isInsideMap = nextRightTile !== undefined && nextLeftTile !== undefined;
 	let isValidTile = idToTile.get(nextRightTile) !== ETileTypes.box && idToTile.get(nextLeftTile) !== ETileTypes.box;

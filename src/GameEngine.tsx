@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import './GameEngine.css';
 import { levels } from './data/maps/IMap';
-import { movementLoop } from './utils/movement';
+import { charTileSizeRatio, movementLoop, tileSize } from './utils/movement';
 import { RenderTile } from './components/RenderTile';
 import avatar from './assets/Asset-1.svg';
 
@@ -21,18 +21,10 @@ const GameEngine = () => {
 	const [transformMap, setTransformMap] = useState('');
 	const [transformChar, setTransformChar] = useState('');
 
-	// Tile logic
-	const tileSize = 50;
-	const stepsPerTile = 1;
-	const stepSize = 1 / stepsPerTile;
-
-	const charTileSizeRatio = 2;
-	const charOffSetTiles = 5 * tileSize;
-
 	/** Setup the movement for the elements */
-	useEffect(() => movementLoop(document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), []);
+	useEffect(() => movementLoop(currentLevel, document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), []);
 
-	console.log('re-render');
+	console.log('re-rendered the app.. very heavy on performance.');
 
 	return (
 		<div id='frame'>
