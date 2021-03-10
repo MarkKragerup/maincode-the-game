@@ -1,19 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { useKeyboardPress } from './utils/useKeyboardPress';
 import { levels } from './data/maps/IMap';
-import { isValidMove, ITransformCB, moveCharacter, movementLoop } from './utils/movement';
+import { movementLoop } from './utils/movement';
 import { RenderTile } from './components/RenderTile';
-import Modal from './components/Modal';
 import avatar from './assets/Asset-1.svg';
 
-/** TODO
- * ES6 import cant import sound files.
- * I cannot get this to work...
- * const soundtrack = require('./assets/soundtrack.mp3');
- */
-
-enum EFaceDirection {
+export enum EFaceDirection {
 	up = 'face-up',
 	down = 'face-down',
 	right = 'face-right',
@@ -25,7 +17,6 @@ const GameEngine = () => {
 
 	const [currentTile, setCurrentTile] = useState<{ column: number; row: number }>();
 	const [faceDirection, setFaceDirection] = useState<EFaceDirection>(EFaceDirection.down);
-	const [isWalking, setIsWalking] = useState(false);
 
 	const [transformMap, setTransformMap] = useState('');
 	const [transformChar, setTransformChar] = useState('');
@@ -38,33 +29,21 @@ const GameEngine = () => {
 	const charTileSizeRatio = 2;
 	const charOffSetTiles = 5 * tileSize;
 
-	useEffect(() => {
-		movementLoop(setTransformChar, setTransformMap);
-	}, []);
+	/** Setup the movement for the elements */
+	useEffect(() => movementLoop(document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), []);
+
+	console.log('re-render');
 
 	return (
-		<div className='frame'>
-			<div className='camera'>
-				<div
-					className='map'
-					style={{
-						transform: transformMap,
-						width: `${tileSize * levels[currentLevel][0].length}px`
-					}}
-				>
+		<div id='frame'>
+			<div id='camera'>
+				<div id='map' style={{ transform: transformMap, width: `${tileSize * levels[currentLevel][0].length}px` }}>
 					{levels[currentLevel].map((row, i) => (
 						<div key={i} className='row' style={{ height: `${tileSize}px` }}>
 							{row.map((tile, j) => RenderTile(tile, j, i, tileSize))}
 						</div>
 					))}
-					<div
-						className={`character ${isWalking ? 'walking' : ''}`}
-						style={{
-							transform: transformChar,
-							height: `${tileSize * charTileSizeRatio}px`,
-							width: `${tileSize * charTileSizeRatio}px`
-						}}
-					>
+					<div id={'character'} style={{ transform: transformChar, height: `${tileSize * charTileSizeRatio}px`, width: `${tileSize * charTileSizeRatio}px` }}>
 						<img src={avatar} alt='avatar' />
 					</div>
 				</div>

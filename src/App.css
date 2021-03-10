@@ -10,7 +10,7 @@ body {
     --pixel-size: 2;
 }
 
-.frame {
+#frame {
     box-sizing: border-box;
     border: 1px solid red;
     width: 100vh;
@@ -18,66 +18,35 @@ body {
     margin: auto;
 }
 @media (orientation: portrait) {
-    .frame {
+    #frame {
         width: 100vw;
         height: 100vw;
         margin-top: calc(50vh - 50vw);
     }
 }
 
-.camera {
+#camera {
     overflow: hidden;
     position: relative;
     height: 100%;
     width: 100%;
 }
 
-.map {
+#map {
     position: relative;
 }
 
-.map .row {
+#map .row {
     display: flex;
 }
 
-
-
-.character {
+#character {
     position: absolute;
     overflow: hidden;
     top: 0;
     left: 0;
 }
 
-.character-spritesheet {
-    width: calc(128px * var(--pixel-size));
-    position: absolute;
-}
-
-.character-spritesheet .walking {
-    animation: move-spritesheet 0.6s steps(4) infinite;
-}
-
-@keyframes move-spritesheet {
-    from {
-        transform: translate3d(0px, 0, 0)
-    }
-    to {
-        transform: translate3d(-100%, 0, 0)
-    }
-}
-
-.face-right {
-    top: calc(-32px * var(--pixel-size));
-}
-
-.face-up {
-    top: calc(-64px * var(--pixel-size));
-}
-
-.face-left {
-    top: calc(-96px * var(--pixel-size));
-}
 
 audio {
     border: none;

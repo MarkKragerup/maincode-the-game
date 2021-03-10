@@ -11,7 +11,7 @@ const held_directions: any[] = []; //State of which arrow keys we are holding do
 const speed = 5; //How fast the character moves in pixels per frame
 
 // @Returns new translates for moving the character and the map.
-export const moveCharacter = (transformCharCB: ITransformCB, transformMapCB: ITransformCB) => {
+export const moveCharacter = (char?: HTMLElement, map?: HTMLElement) => {
 	const held_direction = held_directions[0];
 	if (held_direction) {
 		if (held_direction === directions.right) {
@@ -48,8 +48,10 @@ export const moveCharacter = (transformCharCB: ITransformCB, transformMapCB: ITr
 
 	const camera_offset = 250;
 
-	transformMapCB(`translate3d( ${-x + camera_offset}px, ${-y + camera_offset}px, 0 )`);
-	transformCharCB(`translate3d( ${x}px, ${y}px, 0 )`);
+	if (!!char && !!map) {
+		map.style.transform = `translate3d( ${-x + camera_offset}px, ${-y + camera_offset}px, 0 )`;
+		char.style.transform = `translate3d( ${x}px, ${y}px, 0 )`;
+	}
 };
 
 /* Direction key state */
@@ -83,10 +85,10 @@ document.addEventListener('keyup', (e) => {
 });
 
 /** Sets up a persistent loop for the character movement animations. */
-export const movementLoop = (transformCharCB: ITransformCB, transformMapCB: ITransformCB) => {
-	moveCharacter(transformCharCB, transformMapCB);
+export const movementLoop = (char?: HTMLElement, map?: HTMLElement) => {
+	moveCharacter(char, map);
 	window.requestAnimationFrame(() => {
-		movementLoop(transformCharCB, transformMapCB);
+		movementLoop(char, map);
 	});
 };
 
