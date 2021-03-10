@@ -8,7 +8,7 @@ import Modal from './components/Modal';
 import avatar from './assets/Asset-1.svg';
 
 
-/**
+/** TODO
  * ES6 import cant import sound files.
  * I cannot get this to work...
  * const soundtrack = require('./assets/soundtrack.mp3');
