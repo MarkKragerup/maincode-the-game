@@ -53,9 +53,11 @@ const GameEngine = () => {
 
     // Tile logic
     const tileSize = 50;
-    const stepsPerTile = 50;
-    const stepSize = tileSize / stepsPerTile;
-    const characterOffSetTiles = 5 * tileSize;
+    const stepsPerTile = 100;
+    const stepSize = Math.round(tileSize / stepsPerTile);
+
+    const charTileSizeRatio = 2;
+    const charOffSetTiles = 5 * tileSize;
 
     // In milliseconds.
     const moveSpeed = 200;
@@ -78,14 +80,18 @@ const GameEngine = () => {
             setFaceDirection(nextMove.faceDirection);
             setIsWalking(true);
 
+            // Do one quick move, without having to wait for the interval to trigger
+            const immediateMove = {x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY};
+            setCurrentPos(currentPos => isValidMove(levels[currentLevel], immediateMove, charTileSizeRatio) && !isWalking ? immediateMove : currentPos)
+
+            // Set an interval to run while the key is still pressed
             const interval = setInterval(() => setCurrentPos((currentPos) => {
                     const nextPos = {x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY};
-                    return isValidMove(levels[currentLevel], nextPos) ? {
-                        x: currentPos.x + nextMove.difX,
-                        y: currentPos.y + nextMove.difY
-                    } : currentPos;
+                    return isValidMove(levels[currentLevel], nextPos, charTileSizeRatio) ? nextPos : currentPos;
                 }
             ), moveSpeed);
+            
+            // When the useEffect ends or is re-triggered, clear the interval
             return () => {
                 clearInterval(interval);
                 setIsWalking(false);
@@ -133,9 +139,9 @@ const GameEngine = () => {
             <div className='camera'>
                 <div className='map'
                      style={{
-                         transform: `translate3d(${-currentPos.x * tileSize + characterOffSetTiles}px , ${-currentPos.y * tileSize + characterOffSetTiles}px, 0)`,
+                         transform: `translate3d(${-currentPos.x * tileSize + charOffSetTiles}px , ${-currentPos.y * tileSize + charOffSetTiles}px, 0)`,
                          transition: moveTransitionStyle,
-                         width: `${tileSize * levels[currentLevel].length}px`
+                         width: `${tileSize * levels[currentLevel][0].length}px`
                      }}>
                     {levels[currentLevel].map((row, i) =>
                         <div
@@ -145,7 +151,9 @@ const GameEngine = () => {
                         className={`character ${isWalking ? 'walking' : ''}`}
                         style={{
                             transform: `translate3d(${currentPos.x * tileSize}px, ${currentPos.y * tileSize}px, 0`,
-                            transition: moveTransitionStyle
+                            transition: moveTransitionStyle,
+                            height: `${tileSize * charTileSizeRatio}px`,
+                            width: `${tileSize * charTileSizeRatio}px`,
                         }}
                     >
                         <img src={avatar} alt='avatar'/>
