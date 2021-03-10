@@ -16,6 +16,8 @@ body {
     width: 100vh;
     height: 100vh;
     margin: auto;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
 }
 @media (orientation: portrait) {
     #frame {
