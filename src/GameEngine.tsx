@@ -5,6 +5,8 @@ import {levels} from './data/maps/IMap';
 import {isValidMove} from './utils/movement';
 import {RenderTile} from "./components/RenderTile";
 import Modal from './components/Modal';
+import avatar from './assets/Asset-1.svg';
+
 
 /**
  * ES6 import cant import sound files.
@@ -136,9 +138,7 @@ const GameEngine = () => {
                         className={`character ${isWalking ? 'walking' : ''}`}
                         style={{transform: `translate3d(${currentPos.x * tileSize}px, ${currentPos.y * tileSize}px, 0`, transition: moveTransitionStyle}}
                     >
-                        <img className={`character-spritesheet ${faceDirection}`}
-                             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
-                             alt="Character"/>
+                        <img src={avatar} alt='avatar'/>
                     </div>
                 </div>
                 <Modal isOpen={shouldOpenTerminal}
