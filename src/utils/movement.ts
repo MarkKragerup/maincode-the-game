@@ -11,9 +11,6 @@ export const charTileSizeRatio = 2;
 const dim = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
 
 const camera_offset = dim / 2 - (tileSize * charTileSizeRatio) / 2;
-console.log('w', dim);
-console.log('co', camera_offset);
-console.log('half-char', (tileSize * charTileSizeRatio) / 2);
 
 let x = camera_offset;
 let y = camera_offset;
