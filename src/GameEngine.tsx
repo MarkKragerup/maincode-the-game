@@ -53,14 +53,14 @@ const GameEngine = () => {
 
     // Tile logic
     const tileSize = 50;
-    const stepsPerTile = 100;
-    const stepSize = Math.round(tileSize / stepsPerTile);
+    const stepsPerTile = 2;
+    const stepSize = (1 / stepsPerTile); /* TODO this is incorrect! 50/2 is 25. then it will be map[pos.x-25][..] which is not good. */
 
     const charTileSizeRatio = 2;
     const charOffSetTiles = 5 * tileSize;
 
     // In milliseconds.
-    const moveSpeed = 200;
+    const moveSpeed = 20;
     const moveTransitionStyle = `${moveSpeed}ms transform linear`;
 
     type IMove = {
@@ -82,6 +82,9 @@ const GameEngine = () => {
 
             // Do one quick move, without having to wait for the interval to trigger
             const immediateMove = {x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY};
+            console.log('move: ', immediateMove);
+            console.log('stepSize', stepSize);
+            console.log('currentpos: ', currentPos);
             setCurrentPos(currentPos => isValidMove(levels[currentLevel], immediateMove, charTileSizeRatio) && !isWalking ? immediateMove : currentPos)
 
             // Set an interval to run while the key is still pressed
