@@ -1,0 +1,6 @@
+node_modules
+.next
+README.md
+package-lock.json
+src/styles/antd-custom-theme.css
+*.min.*
