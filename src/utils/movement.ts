@@ -4,11 +4,8 @@ export type IPosition = { x: number; y: number };
 
 // Tile logic
 export const tileSize = 50;
-export const stepsPerTile = 1;
-export const stepSize = 1 / stepsPerTile;
 
 export const charTileSizeRatio = 2;
-export const charOffSetTiles = 5 * tileSize;
 
 //start in the middle of the map
 const camera_offset = 250;
@@ -31,9 +28,7 @@ export const moveCharacter = (currentLevel: number, char?: HTMLElement, map?: HT
 		if (held_direction === directions.down) nextMove.y += speed;
 		if (held_direction === directions.up) nextMove.y -= speed;
 
-		console.log(isValidMove(levels[currentLevel], nextMove));
-
-		if (true) {
+		if (isValidMove(levels[currentLevel], nextMove)) {
 			x = nextMove.x;
 			y = nextMove.y;
 		} else return;
@@ -61,15 +56,15 @@ const keys: Record<number, string> = {
 };
 
 document.addEventListener('keydown', (e) => {
-	var dir = keys[e.which];
+	const dir = keys[e.which];
 	if (dir && held_directions.indexOf(dir) === -1) {
 		held_directions.unshift(dir);
 	}
 });
 
 document.addEventListener('keyup', (e) => {
-	var dir = keys[e.which];
-	var index = held_directions.indexOf(dir);
+	const dir = keys[e.which];
+	const index = held_directions.indexOf(dir);
 	if (index > -1) {
 		held_directions.splice(index, 1);
 	}
@@ -84,16 +79,18 @@ export const movementLoop = (currentLevel: number, char?: HTMLElement, map?: HTM
 };
 
 export const isValidMove = (map: IMap, nextMove: IPosition): boolean => {
-	// There is a boundary for both next left and right tile, since the char can be bigger than 1 tile.
-	//const nextRightTile = map?.[Math.ceil(nextMove.y + charTileSizeRatio / 2)]?.[Math.floor(nextMove.x + charTileSizeRatio / 2)];
-	//const nextLeftTile = map?.[Math.floor(nextMove.y + charTileSizeRatio / 2)]?.[Math.floor(nextMove.x)];
+	const nextTopX = Math.floor(nextMove.x / tileSize);
+	const nextTopY = Math.floor(nextMove.y / tileSize) + 1; // Offset +1 because we want to extend outside the map in the TOP on the Y axis.
 
-	const nextTile = map?.[nextMove.y]?.[nextMove.x];
+	// Offsets because we match on the bottom and right sides - which are the final spaces in the array and can't be accessed when ceiling/flooring.
+	const nextBottomX = Math.ceil(nextMove.x / tileSize + charTileSizeRatio) - 1;
+	const nextBottomY = Math.ceil(nextMove.y / tileSize + charTileSizeRatio) - 1;
 
-	const isInsideMap = nextTile !== undefined;
-	const isValidTile = idToTile.get(nextTile) !== ETileTypes.box && idToTile.get(nextTile) !== ETileTypes.box;
+	const nextTopTile = map?.[nextTopY]?.[nextTopX];
+	const nextBottomTile = map?.[nextBottomY]?.[nextBottomX];
 
-	console.log({ nextMove: nextMove, nextTile: x, isInsideMap: isInsideMap });
+	const isInsideMap = nextTopTile !== undefined && nextBottomTile !== undefined;
+	const isValidTile = idToTile.get(nextTopTile) !== ETileTypes.box && idToTile.get(nextBottomTile) !== ETileTypes.box;
 
 	return isInsideMap && isValidTile;
 };
