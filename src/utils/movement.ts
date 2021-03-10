@@ -1,21 +1,17 @@
-import { IPosition } from '../GameEngine';
 import { ETileTypes, idToTile, IMap } from '../data/maps/IMap';
+
+export type IPosition = { x: number; y: number };
 
 export type ITransformCB = (translate: string) => void;
 
-const character = document.querySelector('.character');
-const map = document.querySelector('.map');
-
 //start in the middle of the map
-let x = 90;
-let y = 34;
+let x = 250;
+let y = 250;
 const held_directions: any[] = []; //State of which arrow keys we are holding down
 const speed = 5; //How fast the character moves in pixels per frame
 
 // @Returns new translates for moving the character and the map.
 export const moveCharacter = (transformCharCB: ITransformCB, transformMapCB: ITransformCB) => {
-	const pixelSize = 2;
-
 	const held_direction = held_directions[0];
 	if (held_direction) {
 		if (held_direction === directions.right) {
@@ -30,9 +26,7 @@ export const moveCharacter = (transformCharCB: ITransformCB, transformMapCB: ITr
 		if (held_direction === directions.up) {
 			y -= speed;
 		}
-		character?.setAttribute('facing', held_direction);
 	}
-	character?.setAttribute('walking', held_direction ? 'true' : 'false');
 
 	//Limits (gives the illusion of walls)
 	const leftLimit = -8;
@@ -52,11 +46,10 @@ export const moveCharacter = (transformCharCB: ITransformCB, transformMapCB: ITr
 		y = bottomLimit;
 	}
 
-	const camera_left = pixelSize * 66;
-	const camera_top = pixelSize * 42;
+	const camera_offset = 250;
 
-	transformMapCB(`translate3d( ${-x * pixelSize + camera_left}px, ${-y * pixelSize + camera_top}px, 0 )`);
-	transformCharCB(`translate3d( ${x * pixelSize}px, ${y * pixelSize}px, 0 )`);
+	transformMapCB(`translate3d( ${-x + camera_offset}px, ${-y + camera_offset}px, 0 )`);
+	transformCharCB(`translate3d( ${x}px, ${y}px, 0 )`);
 };
 
 /* Direction key state */
@@ -66,12 +59,14 @@ const directions = {
 	left: 'left',
 	right: 'right'
 };
+
 const keys: Record<number, string> = {
 	38: directions.up,
 	37: directions.left,
 	39: directions.right,
 	40: directions.down
 };
+
 document.addEventListener('keydown', (e) => {
 	var dir = keys[e.which];
 	if (dir && held_directions.indexOf(dir) === -1) {
