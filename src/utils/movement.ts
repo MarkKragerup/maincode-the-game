@@ -5,9 +5,9 @@ export type IPosition = { x: number; y: number };
 // Tile logic
 export const tileSize = 50;
 
-export const charTileSizeRatio = 2;
+export const charTileSizeRatio = 1.6;
 
-//start in the middle of the map
+// start in the middle of the map
 const dim = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
 
 const camera_offset = dim / 2 - (tileSize * charTileSizeRatio) / 2;

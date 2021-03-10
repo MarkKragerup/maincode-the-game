@@ -2,6 +2,8 @@ import { ETileTypes, idToTile } from '../data/maps/IMap';
 import './tiles.css';
 
 export const RenderTile = (tileTypeId: number, x: number, y: number, tileSize: number) => {
+	const showCoords = false;
+
 	const tileType = idToTile.get(tileTypeId);
 	const style = {
 		width: `${tileSize}px`,
@@ -13,25 +15,25 @@ export const RenderTile = (tileTypeId: number, x: number, y: number, tileSize: n
 		case ETileTypes.standard:
 			return (
 				<div style={style} className='standard' key={key}>
-					{key}
+					{showCoords && key}
 				</div>
 			);
 		case ETileTypes.box:
 			return (
 				<div style={style} className='box' key={key}>
-					{key}
+					{showCoords && key}
 				</div>
 			);
-		case ETileTypes.door:
+		case ETileTypes.portal:
 			return (
-				<div style={style} className='door' key={key}>
-					{key}
+				<div style={style} className='portal' key={key}>
+					{showCoords && key}
 				</div>
 			);
 		default:
 			return (
 				<div style={style} className='standard' key={key}>
-					{key}
+					{showCoords && key}
 				</div>
 			);
 	}

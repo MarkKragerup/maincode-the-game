@@ -3,18 +3,51 @@
     width: 100%;
 }
 
-.standard, .box, .door {
-    border: 1px solid black;
-}
-
 .standard {
-  background: green;
+    background: radial-gradient(circle farthest-corner at center, rgba(255, 255, 255, 1) 50%, rgba(226, 227, 233, 1) 100%);
 }
 
 .box {
-    background: red;
+    border: white;
+    position: relative;
+    transform: translate3d(-6px, -6px, 0);
+    background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 50%, rgba(226, 227, 233, 1) 100%);
+}
+.box:after,
+.box:before {
+    content: '';
+    background: grey;
+    position: absolute;
+}
+.box:after {
+    width: 100%;
+    height: 6px;
+    left: 3.2px;
+    bottom: 0;
+    transform: translatey(100%) skewx(45deg);
+}
+.box:before {
+    width: 6px;
+    height: 100%;
+    right: 0;
+    transform: translatex(100%) skewy(45deg);
+    top: 3.2px;
 }
 
-.door {
-    background: blue;
+.portal {
+    animation:fade 1000ms infinite;
+    -webkit-animation:fade 1000ms infinite;
+    background: radial-gradient(circle farthest-corner at center, rgba(155, 214, 238, 1) 50%, rgba(255, 255, 255, 1) 100%);
+}
+
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    to { opacity: 1.0; }
+}
+
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    to { opacity: 1.0; }
 }
