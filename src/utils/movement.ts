@@ -85,11 +85,15 @@ export const movementLoop = (currentLevel: number, char?: HTMLElement, map?: HTM
 
 export const isValidMove = (map: IMap, nextMove: IPosition): boolean => {
 	// There is a boundary for both next left and right tile, since the char can be bigger than 1 tile.
-	const nextRightTile = map?.[Math.ceil(nextMove.y + charTileSizeRatio / 2)]?.[Math.floor(nextMove.x + charTileSizeRatio / 2)];
-	const nextLeftTile = map?.[Math.floor(nextMove.y + charTileSizeRatio / 2)]?.[Math.floor(nextMove.x)];
+	//const nextRightTile = map?.[Math.ceil(nextMove.y + charTileSizeRatio / 2)]?.[Math.floor(nextMove.x + charTileSizeRatio / 2)];
+	//const nextLeftTile = map?.[Math.floor(nextMove.y + charTileSizeRatio / 2)]?.[Math.floor(nextMove.x)];
 
-	let isInsideMap = nextRightTile !== undefined && nextLeftTile !== undefined;
-	let isValidTile = idToTile.get(nextRightTile) !== ETileTypes.box && idToTile.get(nextLeftTile) !== ETileTypes.box;
+	const nextTile = map?.[nextMove.y]?.[nextMove.x];
+
+	const isInsideMap = nextTile !== undefined;
+	const isValidTile = idToTile.get(nextTile) !== ETileTypes.box && idToTile.get(nextTile) !== ETileTypes.box;
+
+	console.log({ nextMove: nextMove, nextTile: x, isInsideMap: isInsideMap });
 
 	return isInsideMap && isValidTile;
 };
