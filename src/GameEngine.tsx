@@ -6,6 +6,7 @@ import {isValidMove} from './utils/movement';
 import {RenderTile} from "./components/RenderTile";
 import Modal from './components/Modal';
 import avatar from './assets/Asset-1.svg';
+import {applyMoveHack} from "./moveHack";
 
 
 /** TODO
@@ -63,56 +64,9 @@ const GameEngine = () => {
     const moveSpeed = 100;
     const moveTransitionStyle = `${moveSpeed}ms transform linear`;
 
-    type IMove = {
-        difX: number;
-        difY: number;
-        faceDirection: EFaceDirection;
-    }
-
-    /* Handle movement actions */
     useEffect(() => {
-        let nextMove: IMove = {difX: 0, difY: -stepSize, faceDirection: EFaceDirection.up}
-        if (backwardPress) nextMove = {difX: 0, difY: stepSize, faceDirection: EFaceDirection.down}
-        if (leftPress) nextMove = {difX: -stepSize, difY: 0, faceDirection: EFaceDirection.left}
-        if (rightPress) nextMove = {difX: stepSize, difY: 0, faceDirection: EFaceDirection.right}
-
-        if (forwardPress || backwardPress || leftPress || rightPress) {
-            setFaceDirection(nextMove.faceDirection);
-            setIsWalking(true);
-
-            // Do one quick move, without having to wait for the interval to trigger
-            const immediateMove = {x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY};
-            console.log('move: ', immediateMove);
-            console.log('stepSize', stepSize);
-            console.log('currentpos: ', currentPos);
-            setCurrentPos(currentPos => isValidMove(levels[currentLevel], immediateMove, charTileSizeRatio) && !isWalking ? immediateMove : currentPos)
-
-            // Set an interval to run while the key is still pressed
-            const interval = setInterval(() => setCurrentPos((currentPos) => {
-                    const nextPos = {x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY};
-                    return isValidMove(levels[currentLevel], nextPos, charTileSizeRatio) ? nextPos : currentPos;
-                }
-            ), moveSpeed);
-            
-            // When the useEffect ends or is re-triggered, clear the interval
-            return () => {
-                clearInterval(interval);
-                setIsWalking(false);
-            }
-        }
-    }, [forwardPress, backwardPress, leftPress, rightPress]);
-
-    useEffect(() => {
-        setCurrentTile({column: currentPos.x, row: currentPos.y});
-        changeMap(currentPos);
-    }, [currentPos]);
-
-    const changeMap = (position: IPosition) => {
-        if (currentMap === EMap.entrance) {
-            if (position.x === terminalDoorPosition.x && position.y === terminalDoorPosition.y) setShouldOpenTerminal(true);
-            if (position.x === labDoorPosition.x && position.y === labDoorPosition.y) setCurrentMap(EMap.lab);
-        }
-    }
+        applyMoveHack();
+    }, [])
 
     const onTerminalInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => setTerminalInput(ev.target.value);
 
@@ -142,8 +96,7 @@ const GameEngine = () => {
             <div className='camera'>
                 <div className='map'
                      style={{
-                         transform: `translate3d(${-currentPos.x * tileSize + charOffSetTiles}px , ${-currentPos.y * tileSize + charOffSetTiles}px, 0)`,
-                         transition: moveTransitionStyle,
+
                          width: `${tileSize * levels[currentLevel][0].length}px`
                      }}>
                     {levels[currentLevel].map((row, i) =>
@@ -153,8 +106,7 @@ const GameEngine = () => {
                     <div
                         className={`character ${isWalking ? 'walking' : ''}`}
                         style={{
-                            transform: `translate3d(${currentPos.x * tileSize}px, ${currentPos.y * tileSize}px, 0`,
-                            transition: moveTransitionStyle,
+
                             height: `${tileSize * charTileSizeRatio}px`,
                             width: `${tileSize * charTileSizeRatio}px`,
                         }}
