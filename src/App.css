@@ -2,7 +2,30 @@
 
 :root {
     --pixel-size: 2;
-    --grid-cell: calc(var(--pixel-size) * 16);
+}
+
+.frame {
+    border: 1px solid red;
+    width: 99vh;
+    height: 99vh;
+}
+
+.camera {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.map {
+    width: calc(10 * 50px);
+    height: calc(10 * 50px);
+    position: relative;
+}
+
+.row {
+    display: flex;
+    height: 50px;
 }
 
 audio {
@@ -68,24 +91,7 @@ ul {
     list-style-type: none;
 }
 
-.camera {
-    overflow: hidden;
-    position: relative;
-}
 
-.frame {
-    border: 1px solid red;
-}
-.map {
-    width: calc(10 * 50px);
-    height: calc(10 * 50px);
-    position: relative;
-}
-
-.row {
-    display: flex;
-    height: 50px;
-}
 
 .avatar {
     position: absolute;

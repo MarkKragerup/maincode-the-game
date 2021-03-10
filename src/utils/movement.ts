@@ -1,4 +1,4 @@
-import {IPosition} from "../App";
+import {IPosition} from "../GameEngine";
 import {ETileTypes, idToTile, IMap} from '../data/maps/IMap';
 
 export const isValidMove = (map: IMap, nextMove: IPosition) => isInsideMap(map, nextMove) && isValidTile(map, nextMove);

@@ -1,6 +1,8 @@
 import React from 'react';
 import {isValidMove, isValidTile, isInsideMap, isValidPoint, getNextPoint} from "./utils/movement";
-import {entrance} from "./data/maps/IMap";
+import {levels} from "./data/maps/IMap";
+
+const entrance = levels[0]
 
 describe('Testing movement logic on map 1', () => {
 

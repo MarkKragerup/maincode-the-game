@@ -30,7 +30,7 @@ enum EFaceDirection {
     left = 'face-left'
 }
 
-const App = () => {
+const GameEngine = () => {
     const terminalDoorPosition: IPosition = { x: 7, y: 0 };
     const labDoorPosition: IPosition = { x: 2, y: 0 };
 
@@ -156,4 +156,4 @@ const App = () => {
         </div>
     );
 }
-export default App;
+export default GameEngine;
