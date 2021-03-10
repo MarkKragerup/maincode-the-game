@@ -8,15 +8,20 @@ export const tileSize = 50;
 export const charTileSizeRatio = 2;
 
 //start in the middle of the map
-const camera_offset = 250;
+const dim = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+
+const camera_offset = dim / 2 - (tileSize * charTileSizeRatio) / 2;
+console.log('w', dim);
+console.log('co', camera_offset);
+console.log('half-char', (tileSize * charTileSizeRatio) / 2);
 
 let x = camera_offset;
 let y = camera_offset;
 
 const held_directions: any[] = []; // State of which arrow keys we are holding down
-const speed = 5; // How fast the character moves in pixels per frame
+const speed = 7; // How fast the character moves in pixels per frame
 
-// @Returns new translates for moving the character and the map.
+/** Moves the character and the map by transforming it. */
 export const moveCharacter = (currentLevel: number, char?: HTMLElement, map?: HTMLElement) => {
 	const held_direction = held_directions[0];
 
