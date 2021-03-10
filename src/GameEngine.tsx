@@ -53,14 +53,14 @@ const GameEngine = () => {
 
     // Tile logic
     const tileSize = 50;
-    const stepsPerTile = 2;
-    const stepSize = (1 / stepsPerTile); /* TODO this is incorrect! 50/2 is 25. then it will be map[pos.x-25][..] which is not good. */
+    const stepsPerTile = 1;
+    const stepSize = (1 / stepsPerTile);
 
     const charTileSizeRatio = 2;
     const charOffSetTiles = 5 * tileSize;
 
     // In milliseconds.
-    const moveSpeed = 20;
+    const moveSpeed = 100;
     const moveTransitionStyle = `${moveSpeed}ms transform linear`;
 
     type IMove = {
