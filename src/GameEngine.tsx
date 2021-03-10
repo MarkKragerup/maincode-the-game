@@ -43,7 +43,7 @@ const GameEngine = () => {
     const [faceDirection, setFaceDirection] = useState<EFaceDirection>(EFaceDirection.up);
     const [terminalInput, setTerminalInput] = useState("");
     const [isWalking, setIsWalking] = useState(false);
-    const [shouldOpenTerminal, setShouldOpenTerminal] = useState(true);
+    const [shouldOpenTerminal, setShouldOpenTerminal] = useState(false);
 
     const forwardPress = useKeyboardPress('w');
     const backwardPress = useKeyboardPress('s');
