@@ -36,9 +36,8 @@ body {
     position: relative;
 }
 
-.row {
+.map .row {
     display: flex;
-    height: 50px;
 }
 
 audio {
