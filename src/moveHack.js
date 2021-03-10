@@ -59,7 +59,7 @@ export const applyMoveHack = () => {
     }
 
 
-//Set up the game loop
+    //Set up the game loop
     const step = () => {
         placeCharacter();
         window.requestAnimationFrame(() => {
