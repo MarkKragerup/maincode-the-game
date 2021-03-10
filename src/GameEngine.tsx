@@ -33,13 +33,13 @@ enum EFaceDirection {
 }
 
 const GameEngine = () => {
-    const terminalDoorPosition: IPosition = { x: 7, y: 0 };
-    const labDoorPosition: IPosition = { x: 2, y: 0 };
+    const terminalDoorPosition: IPosition = {x: 7, y: 0};
+    const labDoorPosition: IPosition = {x: 2, y: 0};
 
     const [currentPos, setCurrentPos] = useState<IPosition>({x: 5, y: 5});
     const [currentMap, setCurrentMap] = useState<EMap>(EMap.entrance);
     const [currentLevel, setCurrentLevel] = useState<number>(0);
-    const [currentTile, setCurrentTile] = useState<{column: number, row: number}>();
+    const [currentTile, setCurrentTile] = useState<{ column: number, row: number }>();
     const [faceDirection, setFaceDirection] = useState<EFaceDirection>(EFaceDirection.up);
     const [terminalInput, setTerminalInput] = useState("");
     const [isWalking, setIsWalking] = useState(false);
@@ -54,7 +54,7 @@ const GameEngine = () => {
     // Tile logic
     const tileSize = 50;
     const stepsPerTile = 50;
-    const stepSize = tileSize/stepsPerTile;
+    const stepSize = tileSize / stepsPerTile;
     const characterOffSetTiles = 5 * tileSize;
 
     // In milliseconds.
@@ -79,9 +79,12 @@ const GameEngine = () => {
             setIsWalking(true);
 
             const interval = setInterval(() => setCurrentPos((currentPos) => {
-                const nextPos = { x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY };
-                return isValidMove(levels[currentLevel], nextPos) ? { x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY } : currentPos;
-              }
+                    const nextPos = {x: currentPos.x + nextMove.difX, y: currentPos.y + nextMove.difY};
+                    return isValidMove(levels[currentLevel], nextPos) ? {
+                        x: currentPos.x + nextMove.difX,
+                        y: currentPos.y + nextMove.difY
+                    } : currentPos;
+                }
             ), moveSpeed);
             return () => {
                 clearInterval(interval);
@@ -91,7 +94,7 @@ const GameEngine = () => {
     }, [forwardPress, backwardPress, leftPress, rightPress]);
 
     useEffect(() => {
-        setCurrentTile({ column: currentPos.x, row: currentPos.y });
+        setCurrentTile({column: currentPos.x, row: currentPos.y});
         changeMap(currentPos);
     }, [currentPos]);
 
@@ -128,15 +131,22 @@ const GameEngine = () => {
     return (
         <div className='frame'>
             <div className='camera'>
-                <div className='map '
-                     style={{transform: `translate3d(${-currentPos.x * tileSize + characterOffSetTiles}px , ${-currentPos.y * tileSize + characterOffSetTiles}px, 0)`, transition: moveTransitionStyle}}>
+                <div className='map'
+                     style={{
+                         transform: `translate3d(${-currentPos.x * tileSize + characterOffSetTiles}px , ${-currentPos.y * tileSize + characterOffSetTiles}px, 0)`,
+                         transition: moveTransitionStyle,
+                         width: `${tileSize * levels[currentLevel].length}px`
+                     }}>
                     {levels[currentLevel].map((row, i) =>
-                      <div
-                        key={i} className='row'>{row.map((tile, j) => RenderTile(tile, j, i, tileSize))}
-                      </div>)}
+                        <div
+                            key={i} className='row' style={{height: `${tileSize}px`}}>{row.map((tile, j) => RenderTile(tile, j, i, tileSize))}
+                        </div>)}
                     <div
                         className={`character ${isWalking ? 'walking' : ''}`}
-                        style={{transform: `translate3d(${currentPos.x * tileSize}px, ${currentPos.y * tileSize}px, 0`, transition: moveTransitionStyle}}
+                        style={{
+                            transform: `translate3d(${currentPos.x * tileSize}px, ${currentPos.y * tileSize}px, 0`,
+                            transition: moveTransitionStyle
+                        }}
                     >
                         <img src={avatar} alt='avatar'/>
                     </div>
@@ -146,7 +156,7 @@ const GameEngine = () => {
                 </Modal>
             </div>
 
-            { /* Chrome does not support autoplay */ }
+            { /* Chrome does not support autoplay */}
             <div className='audio-container'>
                 <audio controls>
                     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"/>
