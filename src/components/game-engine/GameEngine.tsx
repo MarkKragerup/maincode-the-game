@@ -21,6 +21,7 @@ const GameEngine = () => {
 
 	const [transformMap, setTransformMap] = useState('');
 	const [transformChar, setTransformChar] = useState('');
+	const [isTerminalOpen, setIsTerminalOpen] = useState(true);
 
 	/** Setup the movement for the elements */
 	useEffect(() => movementLoop(currentLevel, document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), []);
@@ -48,7 +49,7 @@ const GameEngine = () => {
 					Your browser does not support audio
 				</audio>
 			</div>
-			<Terminal isOpen={true} onCloseCallback={() => false}/>
+			<Terminal isOpen={isTerminalOpen} onCloseCallback={() => setIsTerminalOpen(!isTerminalOpen)}/>
 		</div>
 	);
 };
