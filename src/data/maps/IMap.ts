@@ -1,15 +1,11 @@
+import { ETileTypes } from '../../components/tile/TileFactory';
+
 /** Maps contain a map of tiles, a spawn point and a track id for the music. */
 export type IMap = {
 	spawn: { x: number; y: number };
 	track?: string;
 	board: ETileTypes[][];
 };
-
-export enum ETileTypes {
-	standard = 0,
-	box = 1,
-	portal = 2
-}
 
 const entrance: IMap = {
 	spawn: { x: 2, y: 9 },

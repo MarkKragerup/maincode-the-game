@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './GameEngine.css';
-import { levels } from './data/maps/IMap';
-import { charTileSizeRatio, movementLoop, tileSize } from './utils/movement-engine';
-import { TileFactory } from './components/tile/TileFactory';
-import avatar from './assets/illustrations/Asset-1.svg';
+import './game-engine.css';
+import { levels } from '../../data/maps/IMap';
+import { charTileSizeRatio, movementLoop, tileSize } from '../../utils/movement-engine';
+import { TileFactory } from '../tile/TileFactory';
+import avatar from '../../assets/illustrations/Asset-1.svg';
 
 export enum EFaceDirection {
 	up = 'face-up',

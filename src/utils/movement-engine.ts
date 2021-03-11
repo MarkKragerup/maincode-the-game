@@ -1,4 +1,5 @@
-import { ETileTypes, IMap, levels } from '../data/maps/IMap';
+import { IMap, levels } from '../data/maps/IMap';
+import { ETileTypes } from '../components/tile/TileFactory';
 
 export type IPosition = { x: number; y: number };
 
@@ -16,7 +17,7 @@ let x = camera_offset;
 let y = camera_offset;
 
 const held_directions: any[] = []; // State of which arrow keys we are holding down
-const speed = 7; // How fast the character moves in pixels per frame
+const speed = 5; // How fast the character moves in pixels per frame
 
 /** Moves the character and the map by transforming it. */
 export const moveCharacter = (currentLevel: number, char?: HTMLElement, map?: HTMLElement) => {
@@ -96,7 +97,7 @@ export const isValidMove = (map: IMap, nextMove: IPosition): boolean => {
 
 	// Next tiles are within the array and of accessible types.
 	const isInsideMap = nextTopTile !== undefined && nextBottomTile !== undefined;
-	const isValidTile = nextTopTile !== ETileTypes.box && nextBottomTile !== ETileTypes.box;
+	const isValidTile = nextTopTile !== ETileTypes.wall && nextBottomTile !== ETileTypes.wall;
 
 	return isInsideMap && isValidTile;
 };

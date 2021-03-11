@@ -1,32 +1,32 @@
-.tileSize {
-    height: 100%;
-    width: 100%;
-}
-
-.standard {
+.standard-tile {
+    position: relative;
     background: radial-gradient(circle farthest-corner at center, rgba(255, 255, 255, 1) 50%, rgba(226, 227, 233, 1) 100%);
 }
 
-.box {
-    border: white;
+.full-size {
+    width: 100%;
+    height: 100%;
+}
+
+.wall-tile {
     position: relative;
     transform: translate3d(-6px, -6px, 0);
     background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 50%, rgba(226, 227, 233, 1) 100%);
 }
-.box:after,
-.box:before {
+.wall-tile:after,
+.wall-tile:before {
     content: '';
     background: grey;
     position: absolute;
 }
-.box:after {
+.wall-tile:after {
     width: 100%;
     height: 6px;
     left: 3.2px;
     bottom: 0;
     transform: translatey(100%) skewx(45deg);
 }
-.box:before {
+.wall-tile:before {
     width: 6px;
     height: 100%;
     right: 0;
@@ -34,20 +34,25 @@
     top: 3.2px;
 }
 
-.portal {
-    animation:fade 1000ms infinite;
-    -webkit-animation:fade 1000ms infinite;
-    background: radial-gradient(circle farthest-corner at center, rgba(155, 214, 238, 1) 50%, rgba(255, 255, 255, 1) 100%);
+.portal-tile {
+    border-radius: 50%;
+    width: 80%;
+    margin: auto;
+    background: radial-gradient(circle farthest-side at center, rgba(155, 214, 238, 1) 50%, rgba(155, 214, 238, 0.5) 100%);
+
+    box-shadow: var(--soft-box-shadow);
+
+    animation:fade 2500ms infinite;
+    -webkit-animation:fade 2500ms infinite;
 }
 
 @keyframes fade {
-    from { opacity: 1.0; }
-    50% { opacity: 0.5; }
-    to { opacity: 1.0; }
-}
-
-@-webkit-keyframes fade {
-    from { opacity: 1.0; }
-    50% { opacity: 0.5; }
-    to { opacity: 1.0; }
+    from, to {
+        opacity: 1.0;
+        transform: translateY(2px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(-2px);
+    }
 }
