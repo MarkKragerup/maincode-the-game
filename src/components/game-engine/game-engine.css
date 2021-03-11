@@ -18,9 +18,8 @@
     position: relative;
     height: 100%;
     width: 100%;
-    background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 40%, rgba(236, 237, 243, 1) 100%);
     background-size: 100px 100px;
-    background-repeat: repeat;
+    background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 40%, rgba(236, 237, 243, 1) 100%) repeat;
 }
 
 #map {
