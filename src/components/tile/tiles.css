@@ -1,0 +1,58 @@
+.standard-tile {
+    position: relative;
+    background: radial-gradient(circle farthest-corner at center, rgba(255, 255, 255, 1) 50%, rgba(226, 227, 233, 1) 100%);
+}
+
+.full-size {
+    width: 100%;
+    height: 100%;
+}
+
+.wall-tile {
+    position: relative;
+    transform: translate3d(-10px, -10px, 0);
+    background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 40%, rgba(236, 237, 243, 1) 100%);
+}
+.wall-tile:after,
+.wall-tile:before {
+    content: '';
+    background: rgba(90, 90, 90, 0.6);
+    position: absolute;
+}
+.wall-tile:after {
+    width: 100%;
+    height: 10px;
+    left: 5px;
+    bottom: 0;
+    transform: translatey(100%) skewx(45deg);
+}
+.wall-tile:before {
+    width: 10px;
+    height: 100%;
+    right: 0;
+    transform: translatex(100%) skewy(45deg);
+    top: 5px;
+}
+
+.portal-tile {
+    border-radius: 50%;
+    width: 80%;
+    margin: auto;
+    background: radial-gradient(circle farthest-side at center, rgba(155, 214, 238, 1) 50%, rgba(155, 214, 238, 0.5) 100%);
+
+    box-shadow: var(--soft-box-shadow);
+
+    animation:fade 2500ms infinite;
+    -webkit-animation:fade 2500ms infinite;
+}
+
+@keyframes fade {
+    from, to {
+        opacity: 1.0;
+        transform: translateY(2px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(-2px);
+    }
+}

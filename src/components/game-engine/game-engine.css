@@ -1,0 +1,52 @@
+#frame {
+    box-sizing: border-box;
+    width: 100vh;
+    height: 100vh;
+    margin: auto;
+}
+
+@media (orientation: portrait) {
+    #frame {
+        width: 100vw;
+        height: 100vw;
+        margin-top: calc(50vh - 50vw);
+    }
+}
+
+#camera {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 40%, rgba(236, 237, 243, 1) 100%);
+    background-size: 100px 100px;
+    background-repeat: repeat;
+}
+
+#map {
+    position: relative;
+    background-color: white;
+}
+
+#map .row {
+    display: flex;
+}
+
+#character {
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: 20;
+}
+
+audio {
+    border: none;
+    outline: none;
+}
+
+.audio-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
