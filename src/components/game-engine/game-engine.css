@@ -1,11 +1,9 @@
 #frame {
     box-sizing: border-box;
-    border: 1px solid red;
     width: 100vh;
     height: 100vh;
     margin: auto;
-    background: transparent;
-    backdrop-filter: blur(10px);
+
 }
 @media (orientation: portrait) {
     #frame {
@@ -20,6 +18,9 @@
     position: relative;
     height: 100%;
     width: 100%;
+    background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 40%, rgba(236, 237, 243, 1) 100%);
+    background-size: 100px 100px;
+    background-repeat: repeat;
 }
 
 #map {
