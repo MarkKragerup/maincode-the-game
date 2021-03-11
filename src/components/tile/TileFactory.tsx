@@ -1,15 +1,13 @@
-import { ETileTypes, idToTile } from '../data/maps/IMap';
+import { ETileTypes } from '../../data/maps/IMap';
 import './tiles.css';
 
-export const RenderTile = (tileTypeId: number, x: number, y: number, tileSize: number) => {
+/** Makes an element representing some tile. */
+export const TileFactory = (tileType: ETileTypes, x: number, y: number, tileSize: number) => {
 	const showCoords = false;
 
-	const tileType = idToTile.get(tileTypeId);
-	const style = {
-		width: `${tileSize}px`,
-		height: `${tileSize}px`
-	};
+	// Initialization values
 	const key = `${x},${y}`;
+	const style = { width: `${tileSize}px`, height: `${tileSize}px` };
 
 	switch (tileType) {
 		case ETileTypes.standard:

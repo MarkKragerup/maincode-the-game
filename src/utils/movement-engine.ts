@@ -1,4 +1,4 @@
-import { ETileTypes, idToTile, IMap, levels } from '../data/maps/IMap';
+import { ETileTypes, IMap, levels } from '../data/maps/IMap';
 
 export type IPosition = { x: number; y: number };
 
@@ -81,18 +81,22 @@ export const movementLoop = (currentLevel: number, char?: HTMLElement, map?: HTM
 };
 
 export const isValidMove = (map: IMap, nextMove: IPosition): boolean => {
+	/** Calculate next top tile*/
 	const nextTopX = Math.floor(nextMove.x / tileSize);
 	const nextTopY = Math.floor(nextMove.y / tileSize) + 1; // Offset +1 because we want to extend outside the map in the TOP on the Y axis.
+	const nextTopTile = map.board?.[nextTopY]?.[nextTopX];
 
-	// Offsets because we match on the bottom and right sides - which are the final spaces in the array and can't be accessed when ceiling/flooring.
+	/**
+	 * Calculate next bottom tile.
+	 * Offsets because we match on the bottom and right sides - which are the final spaces in the array and can't be accessed when ceiling/flooring.
+	 */
 	const nextBottomX = Math.ceil(nextMove.x / tileSize + charTileSizeRatio) - 1;
 	const nextBottomY = Math.ceil(nextMove.y / tileSize + charTileSizeRatio) - 1;
+	const nextBottomTile = map.board?.[nextBottomY]?.[nextBottomX];
 
-	const nextTopTile = map?.[nextTopY]?.[nextTopX];
-	const nextBottomTile = map?.[nextBottomY]?.[nextBottomX];
-
+	// Next tiles are within the array and of accessible types.
 	const isInsideMap = nextTopTile !== undefined && nextBottomTile !== undefined;
-	const isValidTile = idToTile.get(nextTopTile) !== ETileTypes.box && idToTile.get(nextBottomTile) !== ETileTypes.box;
+	const isValidTile = nextTopTile !== ETileTypes.box && nextBottomTile !== ETileTypes.box;
 
 	return isInsideMap && isValidTile;
 };

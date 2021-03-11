@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './GameEngine.css';
 import { levels } from './data/maps/IMap';
-import { charTileSizeRatio, movementLoop, tileSize } from './utils/movement';
-import { RenderTile } from './components/RenderTile';
-import avatar from './assets/Asset-1.svg';
+import { charTileSizeRatio, movementLoop, tileSize } from './utils/movement-engine';
+import { TileFactory } from './components/tile/TileFactory';
+import avatar from './assets/illustrations/Asset-1.svg';
 
 export enum EFaceDirection {
 	up = 'face-up',
@@ -29,10 +29,10 @@ const GameEngine = () => {
 	return (
 		<div id='frame'>
 			<div id='camera'>
-				<div id='map' style={{ transform: transformMap, width: `${tileSize * levels[currentLevel][0].length}px` }}>
-					{levels[currentLevel].map((row, i) => (
+				<div id='map' style={{ transform: transformMap, width: `${tileSize * levels[currentLevel].board[0].length}px` }}>
+					{levels[currentLevel].board.map((row, i) => (
 						<div key={i} className='row' style={{ height: `${tileSize}px` }}>
-							{row.map((tile, j) => RenderTile(tile, j, i, tileSize))}
+							{row.map((tile, j) => TileFactory(tile, j, i, tileSize))}
 						</div>
 					))}
 					<div id={'character'} style={{ transform: transformChar, height: `${tileSize * charTileSizeRatio}px`, width: `${tileSize * charTileSizeRatio}px` }}>
