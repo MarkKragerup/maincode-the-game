@@ -4,6 +4,7 @@ import { levels } from '../../data/maps/IMap';
 import { charTileSizeRatio, movementLoop, tileSize } from '../../utils/movement-engine';
 import { TileFactory } from '../tile/TileFactory';
 import avatar from '../../assets/illustrations/Asset-1.svg';
+import Terminal from '../terminal/Terminal';
 
 export enum EFaceDirection {
 	up = 'face-up',
@@ -43,11 +44,11 @@ const GameEngine = () => {
 
 			{/* Chrome does not support autoplay */}
 			<div className='audio-container'>
-				<audio controls>
-					<source src='https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' type='audio/mpeg' />
+				<audio controls src='../../../src/assets/sound/soundtrack.mp3'>
 					Your browser does not support audio
 				</audio>
 			</div>
+			<Terminal isOpen={true} onCloseCallback={() => false}/>
 		</div>
 	);
 };

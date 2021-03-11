@@ -1,20 +1,23 @@
 import React from 'react';
 import './modal.css';
-import closebutton from '../../assets/illustrations/CustomX.svg';
+import exitButton from '../../assets/illustrations/CustomX.svg';
 
 type IProps = {
-	isOpen: boolean;
+	showModal: boolean;
 	onCloseCallback: () => void;
-};
+	className?: string;
+}
 
-const Modal: React.FC<IProps> = ({ children, isOpen = false, onCloseCallback }): JSX.Element => {
+const Modal: React.FC<IProps> = ({ children, showModal = false, onCloseCallback, className = '' }): JSX.Element => {
 	return (
-		<div className={`modal-container ${isOpen ? 'block' : 'none'}`}>
-			<div className='modal-background'>
-				<div className='close-button' onClick={onCloseCallback}>
-					<img src={closebutton} alt='close' className='cross' height={12} width={12} />
+		<div className={`modal ${showModal ? 'block' : 'none'}`}>
+			<div className={`modal-main ${className}`}>
+				<div onClick={onCloseCallback}>
+					<img src={exitButton} alt='exit' className='close-button cross' />
 				</div>
-				<div className='children-container'>{children}</div>
+				<div className='children-container'>
+					{children}
+				</div>
 			</div>
 		</div>
 	);
