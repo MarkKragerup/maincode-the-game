@@ -11,15 +11,16 @@
 .wall-tile {
     position: relative;
     transform: translate3d(-6px, -6px, 0);
-    background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 50%, rgba(226, 227, 233, 1) 100%);
+    background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 40%, rgba(236, 237, 243, 1) 100%);
 }
 .wall-tile:after,
 .wall-tile:before {
     content: '';
-    background: grey;
+    background: rgba(90, 90, 90, 0.4);
     position: absolute;
 }
 .wall-tile:after {
+
     width: 100%;
     height: 6px;
     left: 3.2px;
