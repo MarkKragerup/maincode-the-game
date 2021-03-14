@@ -5,8 +5,8 @@ export type IPosition = { x: number; y: number };
 
 // Tile logic
 export const tileSize = 100;
-
 export const charTileSizeRatio = 1.6;
+export const charSize = tileSize * charTileSizeRatio;
 
 // start in the middle of the map
 const dim = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
@@ -82,39 +82,29 @@ export const movementLoop = (currentLevel: number, char?: HTMLElement, map?: HTM
 };
 
 const getTileForPos = (position: IPosition): IPosition => {
-	const roundedX = position.x >= 0 ? Math.floor(position.x / tileSize) : Math.ceil(position.x / tileSize);
-	const roundedY = position.y >= 0 ? Math.floor(position.y / tileSize) : Math.ceil(position.y / tileSize);
+	const roundedX = position.x >= 0 ? Math.floor(position.x / tileSize) : Math.floor(position.x / tileSize);
+	const roundedY = position.y >= 0 ? Math.floor(position.y / tileSize) : Math.floor(position.y / tileSize);
 
 	return { x: roundedX, y: roundedY };
 };
 
-export const isValidMove = (map: IMap, nextTopLeftPos: IPosition): boolean => {
-	const nextTopRightPos: IPosition = { ...nextTopLeftPos, x: nextTopLeftPos.x + tileSize * charTileSizeRatio };
-	const nextBottomRightPos: IPosition = { ...nextTopRightPos, y: nextTopRightPos.y + tileSize * charTileSizeRatio };
-	const nextBottomLeftPos: IPosition = { ...nextTopLeftPos, y: nextTopLeftPos.x + tileSize * charTileSizeRatio };
+/** Evaluate if a proposed move is valid and legal. */
+export const isValidMove = (map: IMap, nextTL: IPosition): boolean => {
+	// Calculate our standpoint q, which is the middle of the bottom line. Between the feet.
+	const q: IPosition = { x: nextTL.x + charSize / 2, y: nextTL.y + charSize };
 
-	console.log(
-		`|${JSON.stringify(getTileForPos(nextTopLeftPos))} ------ ${JSON.stringify(getTileForPos(nextTopRightPos))}|\n|${JSON.stringify(
-			getTileForPos(nextBottomLeftPos)
-		)} ------ ${JSON.stringify(getTileForPos(nextBottomRightPos))}|`
-	);
+	/** Calculate the hit-box for within the ".character" div. The hit-box is smaller than the div. */
+	const hitBoxTL: IPosition = { x: q.x - 0.45 * tileSize, y: q.y - 0.9 * tileSize };
+	const hitBoxTR: IPosition = { x: q.x + 0.45 * tileSize, y: q.y - 0.9 * tileSize };
+	const hitBoxBL: IPosition = { x: q.x - 0.45 * tileSize, y: q.y };
+	const hitBoxBR: IPosition = { x: q.x + 0.45 * tileSize, y: q.y };
 
-	/** Calculate next top tile*/
-	const nextTopX = Math.floor(nextTopLeftPos.x / tileSize);
-	const nextTopY = Math.floor(nextTopLeftPos.y / tileSize);
-	const nextTopTile = map.board?.[nextTopY]?.[nextTopX];
+	// This array describes the hit-box corners
+	const hitBoxCollisions: IPosition[] = [hitBoxTL, hitBoxTR, hitBoxBR, hitBoxBL].map((pos) => getTileForPos(pos));
 
-	/**
-	 * Calculate next bottom tile.
-	 * Offsets because we match on the bottom and right sides - which are the final spaces in the array and can't be accessed when ceiling/flooring.
-	 */
-	const nextBottomX = Math.ceil(nextTopLeftPos.x / tileSize + charTileSizeRatio);
-	const nextBottomY = Math.ceil(nextTopLeftPos.y / tileSize + charTileSizeRatio);
-	const nextBottomTile = map.board?.[nextBottomY]?.[nextBottomX];
+	/** Check that the hit-box is inside the map (access is not undefined) and that it is a valid tile (tile type is not a wall). */
+	const isInsideMap = hitBoxCollisions.every((pos) => map.board?.[pos.y]?.[pos.x] !== undefined);
+	const isValidTile = hitBoxCollisions.every((pos) => map.board?.[pos.y]?.[pos.x] !== ETileTypes.wall);
 
-	// Next tiles are within the array and of accessible types.
-	const isInsideMap = nextTopTile !== undefined && nextBottomTile !== undefined;
-	const isValidTile = nextTopTile !== ETileTypes.wall && nextBottomTile !== ETileTypes.wall;
-
-	return true;
+	return isInsideMap && isValidTile;
 };
