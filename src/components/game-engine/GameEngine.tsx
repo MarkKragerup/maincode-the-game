@@ -22,7 +22,7 @@ const GameEngine = () => {
 	const [transformChar, setTransformChar] = useState('');
 
 	/** Setup the movement for the elements */
-	useEffect(() => movementLoop(currentLevel, document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), []);
+	useEffect(() => movementLoop(currentLevel, document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), [currentLevel]);
 
 	console.log('re-rendered the app.. very heavy on performance.');
 
