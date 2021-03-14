@@ -11,7 +11,7 @@ export type IMap = {
 export const padMap = (map: IMap): IMap => {
 	const mapXDimension = map.board?.[0]?.length;
 
-	const wallsX = Array.from(Array(mapXDimension), () => ETileTypes.wall);
+	const wallsX = Array.from(Array(mapXDimension + 2), () => ETileTypes.wall);
 
 	return {
 		...map,

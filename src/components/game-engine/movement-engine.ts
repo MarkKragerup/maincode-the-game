@@ -82,14 +82,16 @@ export const movementLoop = (currentLevel: number, char?: HTMLElement, map?: HTM
 };
 
 const getTileForPos = (position: IPosition): IPosition => {
-	const roundedX = position.x >= 0 ? Math.floor(position.x / tileSize) : Math.floor(position.x / tileSize);
-	const roundedY = position.y >= 0 ? Math.floor(position.y / tileSize) : Math.floor(position.y / tileSize);
+	const roundedX = Math.floor(position.x / tileSize);
+	const roundedY = Math.floor(position.y / tileSize);
 
 	return { x: roundedX, y: roundedY };
 };
 
 /** Evaluate if a proposed move is valid and legal. */
 export const isValidMove = (map: IMap, nextTL: IPosition): boolean => {
+	console.log('---------------');
+
 	// Calculate our standpoint q, which is the middle of the bottom line. Between the feet.
 	const q: IPosition = { x: nextTL.x + charSize / 2, y: nextTL.y + charSize };
 
@@ -99,8 +101,13 @@ export const isValidMove = (map: IMap, nextTL: IPosition): boolean => {
 	const hitBoxBL: IPosition = { x: q.x - 0.45 * tileSize, y: q.y };
 	const hitBoxBR: IPosition = { x: q.x + 0.45 * tileSize, y: q.y };
 
+	console.log(`[${map?.board?.[0]?.length}-${map?.board?.length}]`);
+
 	// This array describes the hit-box corners
 	const hitBoxCollisions: IPosition[] = [hitBoxTL, hitBoxTR, hitBoxBR, hitBoxBL].map((pos) => getTileForPos(pos));
+
+	console.log(hitBoxCollisions);
+	console.log(map?.board);
 
 	/** Check that the hit-box is inside the map (access is not undefined) and that it is a valid tile (tile type is not a wall). */
 	const isInsideMap = hitBoxCollisions.every((pos) => map.board?.[pos.y]?.[pos.x] !== undefined);
