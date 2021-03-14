@@ -3,7 +3,7 @@ import './game-engine.css';
 import { levels } from '../../data/maps/IMap';
 import { charTileSizeRatio, movementLoop, tileSize } from '../../utils/movement-engine';
 import { TileFactory } from '../tile/TileFactory';
-import avatar from '../../assets/illustrations/Asset-1.svg';
+import avatar from '../../assets/illustrations/avatar-top-front.svg';
 
 export enum EFaceDirection {
 	up = 'face-up',
@@ -36,7 +36,7 @@ const GameEngine = () => {
 						</div>
 					))}
 					<div id={'character'} style={{ transform: transformChar, height: `${tileSize * charTileSizeRatio}px`, width: `${tileSize * charTileSizeRatio}px` }}>
-						<img src={avatar} alt='avatar' />
+						<img src={avatar} alt='avatar' width={charTileSizeRatio * tileSize} height={charTileSizeRatio * tileSize} />
 					</div>
 				</div>
 			</div>

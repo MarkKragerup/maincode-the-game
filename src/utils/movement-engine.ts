@@ -101,7 +101,7 @@ export const isValidMove = (map: IMap, nextTopLeftPos: IPosition): boolean => {
 
 	/** Calculate next top tile*/
 	const nextTopX = Math.floor(nextTopLeftPos.x / tileSize);
-	const nextTopY = Math.floor(nextTopLeftPos.y / tileSize); // Offset +1 because we want to extend outside the map in the TOP on the Y axis.
+	const nextTopY = Math.floor(nextTopLeftPos.y / tileSize);
 	const nextTopTile = map.board?.[nextTopY]?.[nextTopX];
 
 	/**

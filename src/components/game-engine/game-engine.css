@@ -28,9 +28,7 @@
     background-color: white;
 }
 
-#map .row {
-    display: flex;
-}
+#map .row { display: flex; }
 
 #character {
     position: absolute;
@@ -38,6 +36,7 @@
     top: 0;
     left: 0;
     z-index: 20;
+    border: 1px solid red;
 }
 
 audio {
@@ -51,9 +50,7 @@ audio {
     right: 20px;
 }
 
-ul {
-    list-style-type: none;
-}
+ul { list-style-type: none; }
 
 .terminal {
     width: 100%;
@@ -68,21 +65,13 @@ ul {
     border-bottom: 1px solid #181616;
 }
 
-.cross {
-    margin-left: 3px;
-}
+.cross { margin-left: 3px; }
 
-.green-text {
-    color: green;
-}
+.green-text { color: green; }
 
-.blue-text {
-    color: cornflowerblue;
-}
+.blue-text { color: cornflowerblue; }
 
-.thick-text {
-    font-weight: 600;
-}
+.thick-text { font-weight: 600; }
 
 .terminal-text-layout {
     margin-top: 6%;
@@ -90,9 +79,7 @@ ul {
     color: white;
 }
 
-.li-item {
-    margin-top: 1%;
-}
+.li-item { margin-top: 1%; }
 
 .input {
     margin-left: 1%;
@@ -101,6 +88,4 @@ ul {
     color: white;
 }
 
-.input:focus {
-    outline: none;
-}
+.input:focus { outline: none; }
