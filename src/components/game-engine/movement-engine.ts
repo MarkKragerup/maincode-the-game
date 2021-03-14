@@ -22,8 +22,9 @@ export const held_directions: any[] = []; // State of which arrow keys we are ho
 const speed = 7; // How fast the character moves in pixels per frame
 
 /** Moves the character and the map by transforming it. */
-export const moveCharacter = (currentLevel: number, currentDirection: EFaceDirection, setDirection: Dispatch<any>, char?: HTMLElement, map?: HTMLElement) => {
+export const moveCharacter = (currentLevel: number, setDirection: Dispatch<any>, char?: HTMLElement, map?: HTMLElement) => {
 	const held_direction = held_directions[0];
+	if (held_direction) setDirection(held_direction);
 
 	const nextMove = { x: x, y: y };
 
@@ -49,8 +50,8 @@ export const moveCharacter = (currentLevel: number, currentDirection: EFaceDirec
 export const directions = {
 	up: 'up',
 	down: 'down',
-	left: 'left',
-	right: 'right'
+	right: 'right',
+	left: 'left'
 };
 
 const keys: Record<number, string> = {
@@ -72,9 +73,9 @@ document.addEventListener('keyup', (e) => {
 });
 
 /** Sets up a persistent loop for the character movement animations. */
-export const movementLoop = (currentLevel: number, currentDirection: EFaceDirection, setDirection: Dispatch<any>, char?: HTMLElement, map?: HTMLElement) => {
-	moveCharacter(currentLevel, currentDirection, setDirection, char, map);
-	window.requestAnimationFrame(() => movementLoop(currentLevel, currentDirection, setDirection, char, map));
+export const movementLoop = (currentLevel: number, setDirection: Dispatch<any>, char?: HTMLElement, map?: HTMLElement) => {
+	moveCharacter(currentLevel, setDirection, char, map);
+	window.requestAnimationFrame(() => movementLoop(currentLevel, setDirection, char, map));
 };
 
 const getTileForPos = (position: IPosition): IPosition => ({ x: Math.floor(position.x / tileSize), y: Math.floor(position.y / tileSize) });

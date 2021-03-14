@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './game-engine.css';
 import { levels } from '../../data/maps/IMap';
-import { charTileSizeRatio, held_directions, movementLoop, tileSize } from './movement-engine';
+import { charTileSizeRatio, movementLoop, tileSize } from './movement-engine';
 import { TileFactory } from '../tile/TileFactory';
 import avatar_down from '../../assets/illustrations/avatar/avatar-down.svg';
 import avatar_up from '../../assets/illustrations/avatar/avatar-up.svg';
@@ -29,16 +29,14 @@ const GameEngine = () => {
 	const [avatar, setAvatar] = useState(directionMap.get(EFaceDirection.down));
 
 	/** Setup the movement for the elements */
-	useEffect(() => movementLoop(currentLevel, faceDirection, setFaceDirection, document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), [
-		currentLevel
-	]);
+	useEffect(() => movementLoop(currentLevel, setFaceDirection, document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), [currentLevel]);
 
 	useEffect(() => {
-		setAvatar(directionMap.get(faceDirection));
-	}, [faceDirection, setAvatar]);
+		const nextAvatar = directionMap.get(faceDirection) ?? avatar_down;
+		if (avatar !== nextAvatar) setAvatar(nextAvatar);
+	}, [avatar, faceDirection]);
 
 	console.log('re-rendered the app.. very heavy on performance.');
-	console.log(held_directions);
 
 	return (
 		<div id='frame'>
@@ -50,7 +48,7 @@ const GameEngine = () => {
 						</div>
 					))}
 					<div id={'character'} style={{ height: `${tileSize * charTileSizeRatio}px`, width: `${tileSize * charTileSizeRatio}px` }}>
-						<img src={avatar} alt='avatar' width={charTileSizeRatio * tileSize} height={charTileSizeRatio * tileSize} />
+						<img src={avatar ?? avatar_down} alt='avatar' width={charTileSizeRatio * tileSize} height={charTileSizeRatio * tileSize} />
 					</div>
 				</div>
 			</div>
