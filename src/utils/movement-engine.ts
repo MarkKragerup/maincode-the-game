@@ -81,18 +81,35 @@ export const movementLoop = (currentLevel: number, char?: HTMLElement, map?: HTM
 	});
 };
 
-export const isValidMove = (map: IMap, nextMove: IPosition): boolean => {
+const getTileForPos = (position: IPosition): IPosition => {
+	const roundedX = position.x >= 0 ? Math.floor(position.x / tileSize) : Math.ceil(position.x / tileSize);
+	const roundedY = position.y >= 0 ? Math.floor(position.y / tileSize) : Math.ceil(position.y / tileSize);
+
+	return { x: roundedX, y: roundedY };
+};
+
+export const isValidMove = (map: IMap, nextTopLeftPos: IPosition): boolean => {
+	const nextTopRightPos: IPosition = { ...nextTopLeftPos, x: nextTopLeftPos.x + tileSize * charTileSizeRatio };
+	const nextBottomRightPos: IPosition = { ...nextTopRightPos, y: nextTopRightPos.y + tileSize * charTileSizeRatio };
+	const nextBottomLeftPos: IPosition = { ...nextTopLeftPos, y: nextTopLeftPos.x + tileSize * charTileSizeRatio };
+
+	console.log(
+		`|${JSON.stringify(getTileForPos(nextTopLeftPos))} ------ ${JSON.stringify(getTileForPos(nextTopRightPos))}|\n|${JSON.stringify(
+			getTileForPos(nextBottomLeftPos)
+		)} ------ ${JSON.stringify(getTileForPos(nextBottomRightPos))}|`
+	);
+
 	/** Calculate next top tile*/
-	const nextTopX = Math.floor(nextMove.x / tileSize);
-	const nextTopY = Math.floor(nextMove.y / tileSize) + 1; // Offset +1 because we want to extend outside the map in the TOP on the Y axis.
+	const nextTopX = Math.floor(nextTopLeftPos.x / tileSize);
+	const nextTopY = Math.floor(nextTopLeftPos.y / tileSize); // Offset +1 because we want to extend outside the map in the TOP on the Y axis.
 	const nextTopTile = map.board?.[nextTopY]?.[nextTopX];
 
 	/**
 	 * Calculate next bottom tile.
 	 * Offsets because we match on the bottom and right sides - which are the final spaces in the array and can't be accessed when ceiling/flooring.
 	 */
-	const nextBottomX = Math.ceil(nextMove.x / tileSize + charTileSizeRatio) - 1;
-	const nextBottomY = Math.ceil(nextMove.y / tileSize + charTileSizeRatio) - 1;
+	const nextBottomX = Math.ceil(nextTopLeftPos.x / tileSize + charTileSizeRatio);
+	const nextBottomY = Math.ceil(nextTopLeftPos.y / tileSize + charTileSizeRatio);
 	const nextBottomTile = map.board?.[nextBottomY]?.[nextBottomX];
 
 	// Next tiles are within the array and of accessible types.
