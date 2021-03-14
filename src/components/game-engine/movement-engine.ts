@@ -16,7 +16,7 @@ const camera_offset = dim / 2 - (tileSize * charTileSizeRatio) / 2;
 let x = camera_offset;
 let y = camera_offset;
 
-const held_directions: any[] = []; // State of which arrow keys we are holding down
+export const held_directions: any[] = []; // State of which arrow keys we are holding down
 const speed = 7; // How fast the character moves in pixels per frame
 
 /** Moves the character and the map by transforming it. */
@@ -44,7 +44,7 @@ export const moveCharacter = (currentLevel: number, char?: HTMLElement, map?: HT
 };
 
 /* Direction key state */
-const directions = {
+export const directions = {
 	up: 'up',
 	down: 'down',
 	left: 'left',

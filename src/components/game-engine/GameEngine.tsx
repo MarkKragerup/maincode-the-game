@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import './game-engine.css';
 import { levels } from '../../data/maps/IMap';
-import { charTileSizeRatio, movementLoop, tileSize } from './movement-engine';
+import { charTileSizeRatio, held_directions, movementLoop, tileSize } from './movement-engine';
 import { TileFactory } from '../tile/TileFactory';
-import avatar from '../../assets/illustrations/avatar/avatar-down.svg';
+import avatar_down from '../../assets/illustrations/avatar/avatar-down.svg';
+import avatar_up from '../../assets/illustrations/avatar/avatar-up.svg';
+import avatar_left from '../../assets/illustrations/avatar/avatar-left.svg';
+import avatar_right from '../../assets/illustrations/avatar/avatar-right.svg';
 
 export enum EFaceDirection {
-	up = 'face-up',
-	down = 'face-down',
-	right = 'face-right',
-	left = 'face-left'
+	up = 'up',
+	down = 'down',
+	right = 'right',
+	left = 'left'
 }
+
+const directionMap = new Map<EFaceDirection, string>([
+	[EFaceDirection.down, avatar_down],
+	[EFaceDirection.up, avatar_up],
+	[EFaceDirection.left, avatar_left],
+	[EFaceDirection.right, avatar_right]
+]);
 
 const GameEngine = () => {
 	const [currentLevel, setCurrentLevel] = useState<number>(0);
 
 	const [currentTile, setCurrentTile] = useState<{ column: number; row: number }>();
 	const [faceDirection, setFaceDirection] = useState<EFaceDirection>(EFaceDirection.down);
+	const [avatar, setAvatar] = useState(directionMap.get(EFaceDirection.down));
 
 	const [transformMap, setTransformMap] = useState('');
 	const [transformChar, setTransformChar] = useState('');
@@ -24,7 +35,12 @@ const GameEngine = () => {
 	/** Setup the movement for the elements */
 	useEffect(() => movementLoop(currentLevel, document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), [currentLevel]);
 
+	useEffect(() => {
+		setAvatar(directionMap.get(faceDirection));
+	}, [faceDirection, setAvatar]);
+
 	console.log('re-rendered the app.. very heavy on performance.');
+	console.log(held_directions);
 
 	return (
 		<div id='frame'>
