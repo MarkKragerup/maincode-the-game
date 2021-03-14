@@ -1,5 +1,7 @@
 import { IMap, levels } from '../../data/maps/IMap';
 import { ETileTypes } from '../tile/TileFactory';
+import { EFaceDirection } from './GameEngine';
+import { Dispatch } from 'react';
 
 export type IPosition = { x: number; y: number };
 
@@ -20,7 +22,7 @@ export const held_directions: any[] = []; // State of which arrow keys we are ho
 const speed = 7; // How fast the character moves in pixels per frame
 
 /** Moves the character and the map by transforming it. */
-export const moveCharacter = (currentLevel: number, char?: HTMLElement, map?: HTMLElement) => {
+export const moveCharacter = (currentLevel: number, currentDirection: EFaceDirection, setDirection: Dispatch<any>, char?: HTMLElement, map?: HTMLElement) => {
 	const held_direction = held_directions[0];
 
 	const nextMove = { x: x, y: y };
@@ -70,9 +72,9 @@ document.addEventListener('keyup', (e) => {
 });
 
 /** Sets up a persistent loop for the character movement animations. */
-export const movementLoop = (currentLevel: number, char?: HTMLElement, map?: HTMLElement) => {
-	moveCharacter(currentLevel, char, map);
-	window.requestAnimationFrame(() => movementLoop(currentLevel, char, map));
+export const movementLoop = (currentLevel: number, currentDirection: EFaceDirection, setDirection: Dispatch<any>, char?: HTMLElement, map?: HTMLElement) => {
+	moveCharacter(currentLevel, currentDirection, setDirection, char, map);
+	window.requestAnimationFrame(() => movementLoop(currentLevel, currentDirection, setDirection, char, map));
 };
 
 const getTileForPos = (position: IPosition): IPosition => ({ x: Math.floor(position.x / tileSize), y: Math.floor(position.y / tileSize) });

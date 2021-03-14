@@ -25,15 +25,13 @@ const directionMap = new Map<EFaceDirection, string>([
 const GameEngine = () => {
 	const [currentLevel, setCurrentLevel] = useState<number>(0);
 
-	const [currentTile, setCurrentTile] = useState<{ column: number; row: number }>();
 	const [faceDirection, setFaceDirection] = useState<EFaceDirection>(EFaceDirection.down);
 	const [avatar, setAvatar] = useState(directionMap.get(EFaceDirection.down));
 
-	const [transformMap, setTransformMap] = useState('');
-	const [transformChar, setTransformChar] = useState('');
-
 	/** Setup the movement for the elements */
-	useEffect(() => movementLoop(currentLevel, document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), [currentLevel]);
+	useEffect(() => movementLoop(currentLevel, faceDirection, setFaceDirection, document.getElementById('character') ?? undefined, document.getElementById('map') ?? undefined), [
+		currentLevel
+	]);
 
 	useEffect(() => {
 		setAvatar(directionMap.get(faceDirection));
@@ -45,13 +43,13 @@ const GameEngine = () => {
 	return (
 		<div id='frame'>
 			<div id='camera'>
-				<div id='map' style={{ transform: transformMap, width: `${tileSize * levels[currentLevel].board[0].length}px` }}>
+				<div id='map' style={{ width: `${tileSize * levels[currentLevel].board[0].length}px` }}>
 					{levels[currentLevel].board.map((row, i) => (
 						<div key={i} className='row' style={{ height: `${tileSize}px` }}>
 							{row.map((tile, j) => TileFactory(tile, j, i, tileSize))}
 						</div>
 					))}
-					<div id={'character'} style={{ transform: transformChar, height: `${tileSize * charTileSizeRatio}px`, width: `${tileSize * charTileSizeRatio}px` }}>
+					<div id={'character'} style={{ height: `${tileSize * charTileSizeRatio}px`, width: `${tileSize * charTileSizeRatio}px` }}>
 						<img src={avatar} alt='avatar' width={charTileSizeRatio * tileSize} height={charTileSizeRatio * tileSize} />
 					</div>
 				</div>
