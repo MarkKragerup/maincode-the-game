@@ -1,5 +1,5 @@
 import React from 'react';
-import { isValidMove, isValidTile, isInsideMap, isValidPoint, getNextPoint } from './utils/movement-engine';
+import { isValidMove, isValidTile, isInsideMap, isValidPoint, getNextPoint } from './components/game-engine/movement-engine';
 import { levels } from './data/maps/IMap';
 
 const entrance = levels[0];

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './game-engine.css';
 import { levels } from '../../data/maps/IMap';
-import { charTileSizeRatio, movementLoop, tileSize } from '../../utils/movement-engine';
+import { charTileSizeRatio, movementLoop, tileSize } from './movement-engine';
 import { TileFactory } from '../tile/TileFactory';
 import avatar from '../../assets/illustrations/avatar-top-front.svg';
 

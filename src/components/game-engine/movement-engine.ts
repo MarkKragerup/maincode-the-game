@@ -1,5 +1,5 @@
-import { IMap, levels } from '../data/maps/IMap';
-import { ETileTypes } from '../components/tile/TileFactory';
+import { IMap, levels } from '../../data/maps/IMap';
+import { ETileTypes } from '../tile/TileFactory';
 
 export type IPosition = { x: number; y: number };
 
