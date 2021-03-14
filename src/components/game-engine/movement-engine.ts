@@ -60,33 +60,22 @@ const keys: Record<number, string> = {
 
 document.addEventListener('keydown', (e) => {
 	const dir = keys[e.which];
-	if (dir && held_directions.indexOf(dir) === -1) {
-		held_directions.unshift(dir);
-	}
+	if (dir && held_directions.indexOf(dir) === -1) held_directions.unshift(dir);
 });
 
 document.addEventListener('keyup', (e) => {
 	const dir = keys[e.which];
 	const index = held_directions.indexOf(dir);
-	if (index > -1) {
-		held_directions.splice(index, 1);
-	}
+	if (index > -1) held_directions.splice(index, 1);
 });
 
 /** Sets up a persistent loop for the character movement animations. */
 export const movementLoop = (currentLevel: number, char?: HTMLElement, map?: HTMLElement) => {
 	moveCharacter(currentLevel, char, map);
-	window.requestAnimationFrame(() => {
-		movementLoop(currentLevel, char, map);
-	});
+	window.requestAnimationFrame(() => movementLoop(currentLevel, char, map));
 };
 
-const getTileForPos = (position: IPosition): IPosition => {
-	const roundedX = Math.floor(position.x / tileSize);
-	const roundedY = Math.floor(position.y / tileSize);
-
-	return { x: roundedX, y: roundedY };
-};
+const getTileForPos = (position: IPosition): IPosition => ({ x: Math.floor(position.x / tileSize), y: Math.floor(position.y / tileSize) });
 
 /** Evaluate if a proposed move is valid and legal. */
 export const isValidMove = (map: IMap, nextTL: IPosition): boolean => {
