@@ -3,7 +3,7 @@ import './game-engine.css';
 import { levels } from '../../data/maps/IMap';
 import { charTileSizeRatio, movementLoop, tileSize } from './movement-engine';
 import { TileFactory } from '../tile/TileFactory';
-import avatar from '../../assets/illustrations/avatar-top-front.svg';
+import avatar from '../../assets/illustrations/avatar/avatar-down.svg';
 
 export enum EFaceDirection {
 	up = 'face-up',
