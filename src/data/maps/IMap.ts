@@ -3,8 +3,14 @@ import { ETileTypes } from '../../components/tile/TileFactory';
 /** Maps contain a map of tiles, a spawn point and a track id for the music. */
 export type IMap = {
 	spawn: { x: number; y: number };
-	track?: string;
+	tracks?: string[];
+	tileInteractions?: { tileX: number; tileY: number; action: IInteraction }[];
 	board: ETileTypes[][];
+};
+
+export type IInteraction = {
+	isAutoFired: boolean;
+	callBack: (data: unknown) => void;
 };
 
 /** Pads a map with a number of walls in all directions. */
