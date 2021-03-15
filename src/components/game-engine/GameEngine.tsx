@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './game-engine.css';
 import { levels } from '../../data/maps/IMap';
-import { charTileSizeRatio, movementLoop, tileSize } from './movement-engine';
+import { charTileSizeRatio, movementLoop, tileSize, rowSize } from './movement-engine';
 import { TileFactory } from '../tile/TileFactory';
 import avatar_down from '../../assets/illustrations/avatar/avatar-down.svg';
 import avatar_up from '../../assets/illustrations/avatar/avatar-up.svg';
@@ -43,7 +43,7 @@ const GameEngine = () => {
 			<div id='camera'>
 				<div id='map' style={{ width: `${tileSize * levels[currentLevel].board[0].length}px` }}>
 					{levels[currentLevel].board.map((row, i) => (
-						<div key={i} className='row' style={{ height: `${tileSize}px` }}>
+						<div key={i} className='row' style={{ height: `${rowSize}px` }}>
 							{row.map((tile, j) => TileFactory(tile, j, i, tileSize))}
 						</div>
 					))}

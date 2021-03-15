@@ -6,6 +6,7 @@ import { Dispatch } from 'react';
 export type IPosition = { x: number; y: number };
 
 // Tile logic
+export const rowSize = 130;
 export const tileSize = 120;
 export const charTileSizeRatio = 1.4;
 export const charSize = tileSize * charTileSizeRatio;
