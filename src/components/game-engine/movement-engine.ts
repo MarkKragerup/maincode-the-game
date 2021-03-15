@@ -24,7 +24,15 @@ const speed = 7; // How fast the character moves in pixels per frame
 /** Moves the character and the map by transforming it. */
 export const moveCharacter = (currentLevel: number, setDirection: Dispatch<any>, char?: HTMLElement, map?: HTMLElement) => {
 	const held_direction = held_directions[0];
-	if (held_direction) setDirection(held_direction);
+
+	if (!held_direction) {
+		/* Remove walking className */
+		if (char) char.classList.remove('walking');
+	} else {
+		/* Add walking className */
+		if (char) char.classList.add('walking');
+		setDirection(held_direction);
+	}
 
 	const nextMove = { x: x, y: y };
 
@@ -78,7 +86,10 @@ export const movementLoop = (currentLevel: number, setDirection: Dispatch<any>, 
 	window.requestAnimationFrame(() => movementLoop(currentLevel, setDirection, char, map));
 };
 
-const getTileForPos = (position: IPosition): IPosition => ({ x: Math.floor(position.x / tileSize), y: Math.floor(position.y / tileSize) });
+const getTileForPos = (position: IPosition): IPosition => ({
+	x: Math.floor(position.x / tileSize),
+	y: Math.floor(position.y / tileSize)
+});
 
 /** Evaluate if a proposed move is valid and legal. */
 export const isValidMove = (map: IMap, nextTL: IPosition): boolean => {

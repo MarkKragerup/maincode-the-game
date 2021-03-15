@@ -16,10 +16,10 @@ export enum EFaceDirection {
 }
 
 const directionMap = new Map<EFaceDirection, string>([
-	[EFaceDirection.down, avatar_down],
-	[EFaceDirection.up, avatar_up],
-	[EFaceDirection.left, avatar_left],
-	[EFaceDirection.right, avatar_right]
+	[EFaceDirection.down, 'face-down'],
+	[EFaceDirection.up, 'face-up'],
+	[EFaceDirection.left, 'face-left'],
+	[EFaceDirection.right, 'face-right']
 ]);
 
 const GameEngine = () => {
@@ -47,8 +47,10 @@ const GameEngine = () => {
 							{row.map((tile, j) => TileFactory(tile, j, i, tileSize))}
 						</div>
 					))}
-					<div id={'character'} style={{ height: `${tileSize * charTileSizeRatio}px`, width: `${tileSize * charTileSizeRatio}px` }}>
-						<img src={avatar ?? avatar_down} alt='avatar' width={charTileSizeRatio * tileSize} height={charTileSizeRatio * tileSize} />
+					<div id={'character'} className='walking' style={{ height: `${32*4}px`, width: `${32*4}px` }}>
+						<img className={`character-spritesheet ${faceDirection}`} height={128*4} width={128*4}
+								 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
+								 alt="Character"/>
 					</div>
 				</div>
 			</div>
