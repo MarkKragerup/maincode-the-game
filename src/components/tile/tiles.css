@@ -1,16 +1,16 @@
 .standard-tile {
-    box-sizing: border-box;
     background: #cfc0c0;
     box-shadow: 8px 8px grey;
+    border: 1px solid transparent;
     border-radius: 15px;
     margin: 15px 0 15px 15px;
 }
 
 .wall-tile {
-    height: 130px!important;
-    box-sizing: border-box;
-    background: #5f5959;
-    box-shadow: 20px 20px 0 #322e2e;
+    background: #322e2e;
+    box-shadow: 8px 8px grey;
+    border: 1px solid transparent;
+    border-radius: 15px;
 }
 
 .portal-tile {

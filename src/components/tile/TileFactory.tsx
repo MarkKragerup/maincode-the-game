@@ -26,7 +26,11 @@ export const TileFactory = (tileType: ETileTypes, x: number, y: number, tileSize
 
 const makeBasicTile: ITileGenerator = (key, size) => <div key={key} style={size} className='standard-tile' />;
 
-const makeWallTile: ITileGenerator = (key, size) => ( <div key={key} style={size} className='wall-tile full-size' /> );
+const makeWallTile: ITileGenerator = (key, size) => (
+	<div key={key} style={size} className="standard-tile">
+		<div className='wall-tile full-size' />
+	</div>
+);
 
 const makePortalTile: ITileGenerator = (key, size) => (
 	<div key={key} style={size} className='standard-tile'>
