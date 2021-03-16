@@ -1,5 +1,7 @@
 .standard-tile {
     position: relative;
+    border: 1px solid rgba(90, 90, 90, 0.2);
+    border-left: none;
     background: radial-gradient(circle farthest-corner at center, rgba(255, 255, 255, 1) 50%, rgba(226, 227, 233, 1) 100%);
 }
 
@@ -9,7 +11,11 @@
 }
 
 .wall-tile {
+    border: 1px solid rgba(90, 90, 90, 0.2);
+    border-bottom: none;
+    border-right: none;
     position: relative;
+    z-index: 2;
     transform: translate3d(-10px, -10px, 0);
     background: radial-gradient(circle farthest-side at center, rgba(255, 255, 255, 1) 40%, rgba(236, 237, 243, 1) 100%);
 }

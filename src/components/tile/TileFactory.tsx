@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from 'react';
+import { CSSProperties } from 'react';
 import './tiles.css';
 
 export enum ETileTypes {
