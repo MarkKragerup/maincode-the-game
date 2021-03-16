@@ -35,7 +35,7 @@
 
 #character {
     position: absolute;
-    overflow: hidden;
+    background: red;
     top: 0;
     left: 0;
     z-index: 20;

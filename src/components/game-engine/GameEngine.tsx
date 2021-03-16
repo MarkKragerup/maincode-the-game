@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './game-engine.css';
 import { levels } from '../../data/maps/IMap';
-import { charTileSizeRatio, movementLoop, tileSize } from './movement-engine';
+import { movementLoop, tileSize } from './movement-engine';
 import { TileFactory } from '../tile/TileFactory';
 import avatar_down from '../../assets/illustrations/avatar/avatar-down.svg';
-import avatar_up from '../../assets/illustrations/avatar/avatar-up.svg';
-import avatar_left from '../../assets/illustrations/avatar/avatar-left.svg';
-import avatar_right from '../../assets/illustrations/avatar/avatar-right.svg';
+import sprite_sheet from '../../assets/illustrations/avatar_sprite_v1.svg';
 
 export enum EFaceDirection {
 	up = 'up',
@@ -49,8 +47,7 @@ const GameEngine = () => {
 					))}
 					<div id={'character'} className='walking' style={{ height: `${32*4}px`, width: `${32*4}px` }}>
 						<img className={`character-spritesheet ${faceDirection}`} height={128*4} width={128*4}
-								 src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png"
-								 alt="Character"/>
+								 src={sprite_sheet} alt="Character"/>
 					</div>
 				</div>
 			</div>
